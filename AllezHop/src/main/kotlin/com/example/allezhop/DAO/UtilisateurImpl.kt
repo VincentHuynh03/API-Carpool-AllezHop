@@ -1,6 +1,5 @@
 package com.example.allezhop.DAO
 
-import com.example.allezhop.DAO.UtilisateurDAO
 import com.example.allezhop.Modèles.Utilisateur
 import crosemont.tdi.g66.restaurantapirest.DAO.SourceDonnées
 import org.springframework.stereotype.Repository
@@ -17,11 +16,11 @@ class UtilisateurImpl():  UtilisateurDAO {
     override fun chercherParCode(code: Int): Utilisateur? = SourceDonnées.utilisateurs.find{it.code == code}
 
 
-    override fun supprimer(code: String): Boolean {
+    override fun supprimer(code: Int): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun modifier(code: String, utilisateur: Utilisateur): Utilisateur? {
+    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
         TODO("Not yet implemented")
     }
 
