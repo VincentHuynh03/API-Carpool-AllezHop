@@ -1,5 +1,6 @@
 package crosemont.tdi.g66.restaurantapirest.DAO
 
+import com.example.allezhop.Modèles.Notification
 import com.example.allezhop.Modèles.Reservation
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
@@ -23,6 +24,11 @@ class SourceDonnées {
             Reservation(1),
             Reservation(2) ,
             Reservation(3),
+        )
+        val notifications = mutableListOf(
+            Notification(1),
+            Notification(2) ,
+            Notification(3),
         )
     }
 }
