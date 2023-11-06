@@ -1,8 +1,7 @@
 package com.example.allezhop.Controleurs
 
-import com.example.allezhop.DAO.ReservationDAO
+import com.example.allezhop.DAO.IntrouvableException
 import com.example.allezhop.Services.NotificationService
-import crosemont.tdi.g66.restaurantapirest.exceptions.IntrouvableException
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
