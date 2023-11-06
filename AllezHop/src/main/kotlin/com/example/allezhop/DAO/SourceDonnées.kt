@@ -1,5 +1,6 @@
 package crosemont.tdi.g66.restaurantapirest.DAO
 
+import com.example.allezhop.Modèles.Reservation
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
 
@@ -17,6 +18,11 @@ class SourceDonnées {
             Trajet(1),
             Trajet(2) ,
             Trajet(3),
+        )
+        val reservations = mutableListOf(
+            Reservation(1),
+            Reservation(2) ,
+            Reservation(3),
         )
     }
 }
