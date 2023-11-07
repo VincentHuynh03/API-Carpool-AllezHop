@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component
 @Component
 class SourceDonnées {
     companion object {
-        val utilisateurs = mutableListOf(
-                Utilisateur(1),
-                Utilisateur(2) ,
-                Utilisateur(3),
+        /*val utilisateurs = mutableListOf(
+                Utilisateur(1, "Voirenne", "Iris", "iris.v@gmail.com", "pass123"),
+                Utilisateur(2, "Doe", "Jane", "jane.doe@gmail.com", "pass123") ,
+                Utilisateur(3, "Tremblay", "Bob", "bob.t@gmail.com", "pass123"),
         )
         val trajets = mutableListOf(
             Trajet(1),
             Trajet(2) ,
             Trajet(3),
-        )
+        )*/
         val reservations = mutableListOf(
             Reservation(1),
             Reservation(2) ,

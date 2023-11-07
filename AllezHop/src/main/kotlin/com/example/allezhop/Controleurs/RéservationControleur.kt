@@ -16,7 +16,7 @@ class RéservationControleur(val service: ReservationService) {
     fun obtenirReservations() = service.chercherTous()
 
     @GetMapping("/reservations/{code}")
-    fun obtenirReservationsParCode(@PathVariable code: Int) {
+    fun obtenirReservationsParCode(@PathVariable code: String) {
         service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 

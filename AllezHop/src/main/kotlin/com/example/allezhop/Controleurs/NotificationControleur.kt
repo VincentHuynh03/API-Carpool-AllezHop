@@ -15,7 +15,7 @@ class NotificationControleur(val service: NotificationService)  {
 
 
     @GetMapping("/notifications/{code}")
-    fun obtenirNotificationsParCode(@PathVariable code: Int) {
+    fun obtenirNotificationsParCode(@PathVariable code: String) {
         service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 }

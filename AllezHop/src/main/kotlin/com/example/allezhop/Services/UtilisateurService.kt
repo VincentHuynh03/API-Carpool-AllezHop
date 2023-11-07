@@ -9,7 +9,7 @@ class UtilisateurService(val dao: UtilisateurDAO) {
 
     fun chercherTous(): List<Utilisateur> = dao.chercherTous()
 
-    fun chercherParCode(code: Int): Utilisateur? = dao.chercherParCode(code)
+    fun chercherParCode(code: String): List<Utilisateur>? = dao.chercherParCode(code)
 
 
 

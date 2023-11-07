@@ -15,7 +15,7 @@ class TrajetControleur(val service: TrajetService) {
     fun obtenirTrajets() = service.chercherTous()
 
     @GetMapping("/trajets/{code}")
-    fun obtenirTrajetsParCode(@PathVariable code: Int) {
+    fun obtenirTrajetsParCode(@PathVariable code: String) {
         service.chercherParCode(code)?: throw IntrouvableException("Le trajets  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 }

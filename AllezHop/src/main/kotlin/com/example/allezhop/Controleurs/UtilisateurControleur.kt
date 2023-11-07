@@ -16,8 +16,8 @@ class UtilisateurControleur(val service: UtilisateurService) {
 
 
     @GetMapping("/utilisateurs/{code}")
-    fun obtenirUtilisateursParCode(@PathVariable code: Int) {
-        service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE. Écran Bleu si je pouvais.")
+    fun obtenirUtilisateursParCode(@PathVariable code: String) {
+        service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE.")
     }
 
 
