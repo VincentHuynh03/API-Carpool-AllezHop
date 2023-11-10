@@ -18,10 +18,10 @@ class UtilisateurControleur(val service: UtilisateurService) {
 
 
     @GetMapping("/utilisateurs/{code}")
-    fun obtenirUtilisateursParCode(@PathVariable code: Int) {
-        service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE. Écran Bleu si je pouvais.")
+    fun obtenirUtilisateursParCode(@PathVariable code: String) {
+        service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE.")
     }
-
+/*
     @PostMapping(value = ["/utilisateurs"])
     fun ajouterUtilisateur(@RequestBody utilisateur: Utilisateur): ResponseEntity<Utilisateur> {
         val productAdded: Utilisateur? = service.ajouter(utilisateur)
@@ -40,4 +40,6 @@ class UtilisateurControleur(val service: UtilisateurService) {
     fun supprimerUtilisateur(@RequestBody utilisateur: Utilisateur) {
         service.supprimer(utilisateur)
     }
+    */
+
 }

@@ -14,14 +14,18 @@ class ReservationImpl():  ReservationDAO {
     override fun chercherTous(): List<Reservation> = SourceDonnées.reservations
 
 
-    override fun chercherParCode(code: Int): Reservation? = SourceDonnées.reservations.find{it.code == code}
     override fun supprimer(reservation: Reservation): Reservation? {
         SourceDonnées.reservations.remove(reservation);
         return reservation;
     }
 
+    override fun chercherParCode(code: String): List<Reservation>? {
+        TODO()
+    }
 
-    override fun modifier(code: Int, reservation: Reservation): Reservation? {
+
+
+    override fun modifier(code: String, reservation: Reservation): Reservation? {
         TODO("Not yet implemented")
     }
 

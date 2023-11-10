@@ -10,7 +10,7 @@ class TrajetService(val dao: TrajetDAO) {
 
     fun chercherTous(): List<Trajet> = dao.chercherTous()
 
-    fun chercherParCode(code: Int): Trajet? = dao.chercherParCode(code)
+    fun chercherParCode(code: String): List<Trajet>? = dao.chercherParCode(code)
 
 
     fun ajouter(trajet: Trajet) = dao.ajouter(trajet)

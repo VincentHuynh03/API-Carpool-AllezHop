@@ -18,26 +18,33 @@ class TrajetControleur(val service: TrajetService) {
     fun obtenirTrajets() = service.chercherTous()
 
     @GetMapping("/trajets/{code}")
-    fun obtenirTrajetsParCode(@PathVariable code: Int) {
-        service.chercherParCode(code)?: throw IntrouvableException("Le trajet  est INTROUVABLE. Écran Bleu si je pouvais.")
-    }
+    fun obtenirTrajetsParCode(@PathVariable code: String) {
+        service.chercherParCode(code)
+            ?: throw IntrouvableException("Le trajet est INTROUVABLE. Écran Bleu si je pouvais.")
 
-    @PostMapping(value = ["/trajets"])
-    fun ajouterTrajet(@RequestBody trajet: Trajet): ResponseEntity<Trajet> {
-        val productAdded: Trajet? = service.ajouter(trajet)
-        if (Objects.isNull(productAdded)) {
-            return ResponseEntity.noContent().build<Trajet?>()
+
+/*
+        @PostMapping(value = ["/trajets"])
+        fun ajouterTrajet(@RequestBody trajet: Trajet): ResponseEntity<Trajet> {
+            val productAdded: Trajet? = service.ajouter(trajet)
+            if (Objects.isNull(productAdded)) {
+                return ResponseEntity.noContent().build<Trajet?>()
+            }
+            val location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{code}")
+                .buildAndExpand(productAdded?.code)
+                .toUri()
+            return ResponseEntity.created(location).build<Trajet?>()
+
         }
-        val location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{code}")
-            .buildAndExpand(productAdded?.code)
-            .toUri()
-        return ResponseEntity.created(location).build<Trajet?>()
 
-    }
-    @DeleteMapping("/trajets")
-    fun supprimerTrajet(@RequestBody trajet: Trajet) {
-        service.supprimer(trajet)
+        @DeleteMapping("/trajets")
+        fun supprimerTrajet(@RequestBody trajet: Trajet) {
+            service.supprimer(trajet)
+
+        }
+        */
+
     }
 }
