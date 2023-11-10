@@ -2,10 +2,12 @@ package com.example.allezhop.Controleurs
 
 import com.example.allezhop.Services.ReservationService
 import com.example.allezhop.DAO.IntrouvableException
-
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RestController
+import com.example.allezhop.Modèles.Reservation
+import com.example.allezhop.Modèles.Trajet
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.util.*
 
 
 @RestController
@@ -20,4 +22,23 @@ class RéservationControleur(val service: ReservationService) {
         service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 
+
+    @PostMapping(value = ["/reservations"])
+    fun ajouterReservation(@RequestBody reservation: Reservation): ResponseEntity<Reservation> {
+        val productAdded: Reservation? = service.ajouter(reservation)
+        if (Objects.isNull(productAdded)) {
+            return ResponseEntity.noContent().build<Reservation?>()
+        }
+        val location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{code}")
+            .buildAndExpand(productAdded?.code)
+            .toUri()
+        return ResponseEntity.created(location).build<Reservation?>()
+
+    }
+    @DeleteMapping("/reservations")
+    fun supprimerReservation(@RequestBody reservation: Reservation) {
+        service.supprimer(reservation)
+    }
 }

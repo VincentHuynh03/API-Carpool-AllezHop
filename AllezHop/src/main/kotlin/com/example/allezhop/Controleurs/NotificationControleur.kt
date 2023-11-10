@@ -1,10 +1,13 @@
 package com.example.allezhop.Controleurs
 
 import com.example.allezhop.DAO.IntrouvableException
+import com.example.allezhop.Modèles.Notification
+import com.example.allezhop.Modèles.Reservation
 import com.example.allezhop.Services.NotificationService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.util.*
 
 
 @RestController
@@ -16,6 +19,25 @@ class NotificationControleur(val service: NotificationService)  {
 
     @GetMapping("/notifications/{code}")
     fun obtenirNotificationsParCode(@PathVariable code: Int) {
-        service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
+        service.chercherParCode(code)?: throw IntrouvableException("La notification  est INTROUVABLE. Écran Bleu si je pouvais.")
+    }
+
+    @PostMapping(value = ["/notifications"])
+    fun ajouterNotification(@RequestBody notification: Notification): ResponseEntity<Notification> {
+        val productAdded: Notification? = service.ajouter(notification)
+        if (Objects.isNull(productAdded)) {
+            return ResponseEntity.noContent().build<Notification?>()
+        }
+        val location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{code}")
+            .buildAndExpand(productAdded?.id)
+            .toUri()
+        return ResponseEntity.created(location).build<Notification?>()
+
+    }
+    @DeleteMapping("/notifications")
+    fun supprimerNotification(@RequestBody notification: Notification) {
+        service.supprimer(notification)
     }
 }

@@ -13,4 +13,9 @@ class TrajetService(val dao: TrajetDAO) {
     fun chercherParCode(code: Int): Trajet? = dao.chercherParCode(code)
 
 
+    fun ajouter(trajet: Trajet) = dao.ajouter(trajet)
+
+
+    fun supprimer(trajet: Trajet) = dao.supprimer(trajet)
+
 }

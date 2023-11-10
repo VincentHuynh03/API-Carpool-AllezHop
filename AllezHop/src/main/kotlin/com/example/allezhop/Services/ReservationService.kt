@@ -11,4 +11,8 @@ class ReservationService(val dao: ReservationDAO) {
     fun chercherTous(): List<Reservation> = dao.chercherTous()
     fun chercherParCode(code: Int): Reservation? = dao.chercherParCode(code)
 
+    fun ajouter(reservation: Reservation) = dao.ajouter(reservation)
+
+
+    fun supprimer(reservation: Reservation) = dao.supprimer(reservation)
 }

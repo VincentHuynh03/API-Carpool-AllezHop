@@ -1,6 +1,7 @@
 package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Notification
+import com.example.allezhop.Modèles.Reservation
 
 interface NotificationDAO : DAO<Notification> {
 
@@ -8,7 +9,7 @@ interface NotificationDAO : DAO<Notification> {
 
     override fun chercherParCode(code: Int): Notification?
 
-    override fun supprimer(code: Int): Boolean
+    override fun supprimer(notification: Notification): Notification?
 
     override fun modifier(code: Int, notification: Notification): Notification?
 

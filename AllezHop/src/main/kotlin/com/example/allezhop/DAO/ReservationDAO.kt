@@ -1,6 +1,7 @@
 package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Reservation
+import com.example.allezhop.Modèles.Trajet
 
 interface ReservationDAO : DAO<Reservation> {
 
@@ -8,7 +9,7 @@ interface ReservationDAO : DAO<Reservation> {
 
     override fun chercherParCode(code: Int): Reservation?
 
-    override fun supprimer(code: Int): Boolean
+    override fun supprimer(reservation: Reservation): Reservation?
 
     override fun modifier(code: Int, reservation: Reservation): Reservation?
 

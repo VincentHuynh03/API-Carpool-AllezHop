@@ -16,17 +16,20 @@ class NotificationImpl():  NotificationDAO {
 
 
     override fun chercherParCode(code: Int): Notification? = SourceDonnées.notifications.find{it.id == code}
+    override fun supprimer(notification: Notification): Notification? {
 
-    override fun supprimer(code: Int): Boolean {
-        TODO("Not yet implemented")
+        SourceDonnées.notifications.remove(notification);
+        return notification;
     }
+
 
     override fun modifier(code: Int, notification: Notification): Notification? {
         TODO("Not yet implemented")
     }
 
     override fun ajouter(notification: Notification): Notification? {
-        TODO("Not yet implemented")
+        SourceDonnées.notifications.add(notification);
+        return notification;
     }
 
 

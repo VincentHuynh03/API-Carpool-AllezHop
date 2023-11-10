@@ -2,9 +2,11 @@ package com.example.allezhop.Controleurs
 
 import com.example.allezhop.Services.UtilisateurService
 import com.example.allezhop.DAO.IntrouvableException
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RestController
+import com.example.allezhop.Modèles.Utilisateur
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.util.*
 
 
 @RestController
@@ -20,5 +22,22 @@ class UtilisateurControleur(val service: UtilisateurService) {
         service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 
+    @PostMapping(value = ["/utilisateurs"])
+    fun ajouterUtilisateur(@RequestBody utilisateur: Utilisateur): ResponseEntity<Utilisateur> {
+        val productAdded: Utilisateur? = service.ajouter(utilisateur)
+        if (Objects.isNull(productAdded)) {
+            return ResponseEntity.noContent().build<Utilisateur?>()
+        }
+        val location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{code}")
+            .buildAndExpand(productAdded?.code)
+            .toUri()
+        return ResponseEntity.created(location).build<Utilisateur?>()
 
+    }
+    @DeleteMapping("/utilisateurs")
+    fun supprimerUtilisateur(@RequestBody utilisateur: Utilisateur) {
+        service.supprimer(utilisateur)
+    }
 }

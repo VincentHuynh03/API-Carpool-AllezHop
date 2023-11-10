@@ -11,17 +11,19 @@ class TrajetImpl:  TrajetDAO {
     override fun chercherTous(): List<Trajet> = SourceDonnées.trajets
 
     override fun chercherParCode(code: Int): Trajet? = SourceDonnées.trajets.find{it.code == code}
-
-
-    override fun supprimer(code: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun supprimer(trajet: Trajet): Trajet? {
+        SourceDonnées.trajets.remove(trajet);
+        return trajet;
     }
+
+
     override fun modifier(code: Int, trajet: Trajet): Trajet? {
         TODO("Not yet implemented")
     }
 
     override fun ajouter(trajet: Trajet): Trajet? {
-        TODO("Not yet implemented")
+        SourceDonnées.trajets.add(trajet);
+        return trajet;
     }
 
 

@@ -7,5 +7,5 @@ interface DAO<T> {
 
     fun modifier(code: Int ,unT: T): T?
 
-    fun supprimer(code: Int): Boolean
+    fun supprimer(unT: T): T?
 }

@@ -15,17 +15,19 @@ class ReservationImpl():  ReservationDAO {
 
 
     override fun chercherParCode(code: Int): Reservation? = SourceDonnées.reservations.find{it.code == code}
-
-    override fun supprimer(code: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun supprimer(reservation: Reservation): Reservation? {
+        SourceDonnées.reservations.remove(reservation);
+        return reservation;
     }
+
 
     override fun modifier(code: Int, reservation: Reservation): Reservation? {
         TODO("Not yet implemented")
     }
 
     override fun ajouter(reservation: Reservation): Reservation? {
-        TODO("Not yet implemented")
+        SourceDonnées.reservations.add(reservation);
+        return reservation;
     }
 
 

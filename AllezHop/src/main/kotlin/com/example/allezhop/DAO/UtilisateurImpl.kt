@@ -16,17 +16,18 @@ class UtilisateurImpl():  UtilisateurDAO {
     override fun chercherParCode(code: Int): Utilisateur? = SourceDonnées.utilisateurs.find{it.code == code}
 
 
-    override fun supprimer(code: Int): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
-        TODO("Not yet implemented")
-    }
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
+        SourceDonnées.utilisateurs.add(utilisateur);
+        return utilisateur;
+    }
+    override fun modifier(code: Int , utilisateur: Utilisateur): Utilisateur? {
         TODO("Not yet implemented")
     }
 
+    override fun supprimer(utilisateur: Utilisateur): Utilisateur?{
+        SourceDonnées.utilisateurs.remove(utilisateur);
+        return utilisateur
+    }
 
 }

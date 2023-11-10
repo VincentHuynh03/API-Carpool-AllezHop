@@ -11,6 +11,9 @@ class UtilisateurService(val dao: UtilisateurDAO) {
 
     fun chercherParCode(code: Int): Utilisateur? = dao.chercherParCode(code)
 
+    fun ajouter(utilisateur: Utilisateur) = dao.ajouter(utilisateur)
 
+
+    fun supprimer(utilisateur: Utilisateur) = dao.supprimer(utilisateur)
 
 }
