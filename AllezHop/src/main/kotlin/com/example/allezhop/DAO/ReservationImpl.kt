@@ -1,6 +1,7 @@
 package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Reservation
+import com.example.allezhop.Modèles.Trajet
 import crosemont.tdi.g66.restaurantapirest.DAO.SourceDonnées
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
@@ -12,13 +13,28 @@ import org.springframework.stereotype.Repository
 class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
 
 
-    override fun chercherTous(): List<Reservation> = SourceDonnées.reservations
+    override fun chercherTous(): List<Reservation> = db.query("SELECT * FROM réservation") { response, _ ->
+        Reservation(
+            code = response.getInt("code"),
+            horodatage = response.getTimestamp("horodatage"),
+            trajet_code = response.getInt("trajet_code"),
+            utilisateur_code = response.getInt("utilisateur_code")
+        )
+    }
 
 
 
 
-    override fun chercherParCode(code: String): List<Reservation>? {
-        TODO()
+    override fun chercherParCode(code: String): List<Reservation> {
+        val sql = "SELECT * FROM réservation WHERE code = ?"
+        return db.query(sql, arrayOf(code)) { response, _ ->
+            Reservation(
+                code = response.getInt("code"),
+                horodatage = response.getTimestamp("horodatage"),
+                trajet_code = response.getInt("trajet_code"),
+                utilisateur_code = response.getInt("utilisateur_code")
+            )
+        }
     }
 
 

@@ -7,6 +7,7 @@ import com.example.allezhop.Modèles.Trajet
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
 import java.util.*
 
 
@@ -22,25 +23,25 @@ class RéservationControleur(val service: ReservationService) {
         service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
     }
 
-/*
-    @PostMapping(value = ["/reservations"])
+    @PostMapping("/reservations")
     fun ajouterReservation(@RequestBody reservation: Reservation): ResponseEntity<Reservation> {
-        val productAdded: Reservation? = service.ajouter(reservation)
-        if (Objects.isNull(productAdded)) {
-            return ResponseEntity.noContent().build<Reservation?>()
+        val reservationAdded = service.ajouter(reservation)
+        return if (reservationAdded != null) {
+            ResponseEntity.created(location(reservationAdded.code)).body(reservationAdded)
+        } else {
+            ResponseEntity.noContent().build()
         }
-        val location = ServletUriComponentsBuilder
+    }
+
+
+
+
+    //POUR URI
+    private fun location(code: Int): URI {
+        return ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{code}")
-            .buildAndExpand(productAdded?.code)
+            .buildAndExpand(code)
             .toUri()
-        return ResponseEntity.created(location).build<Reservation?>()
-
     }
-    @DeleteMapping("/reservations")
-    fun supprimerReservation(@RequestBody reservation: Reservation) {
-        service.supprimer(reservation)
-    }
-
- */
 }

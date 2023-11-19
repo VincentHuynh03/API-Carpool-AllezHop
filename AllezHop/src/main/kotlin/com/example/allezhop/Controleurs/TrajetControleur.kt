@@ -21,7 +21,7 @@ class TrajetControleur(val service: TrajetService) {
     fun obtenirTrajetsParCode(@PathVariable code: String) {
         service.chercherParCode(code)
             ?: throw IntrouvableException("Le trajet est INTROUVABLE. Écran Bleu si je pouvais.")
-
+    }
 
 /*
         @PostMapping(value = ["/trajets"])
@@ -47,4 +47,3 @@ class TrajetControleur(val service: TrajetService) {
         */
 
     }
-}

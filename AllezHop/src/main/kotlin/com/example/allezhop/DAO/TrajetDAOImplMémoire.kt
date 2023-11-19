@@ -22,8 +22,19 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
 
     override fun chercherParCode(code: String): List<Trajet>? {
-        TODO()
+        val sql = "SELECT * FROM trajet WHERE code = ?"
+        return db.query(sql, arrayOf(code)) { response, _ ->
+            Trajet(
+                code = response.getInt("code"),
+                destination = response.getString("destination"),
+                position_départ = response.getString("position_départ"),
+                heure_arrivée = response.getTime("heure_arrivée"),
+                heure_départ_max = response.getTime("heure_départ_max"),
+                utilisateur_code = response.getInt("utilisateur_code")
+            )
+        }
     }
+
 
 
 

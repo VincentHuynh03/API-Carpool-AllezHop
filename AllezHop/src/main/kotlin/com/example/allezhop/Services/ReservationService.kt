@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service
 class ReservationService(val dao: ReservationDAO) {
 
     fun chercherTous(): List<Reservation> = dao.chercherTous()
-    fun chercherParCode(code: String): List<Reservation>? = dao.chercherParCode(code)
+    fun chercherParCode(code: String): List<Reservation> = dao.chercherParCode(code)
 
     fun ajouter(reservation: Reservation) = dao.ajouter(reservation)
 
 
-    fun supprimer(reservation: Reservation) = dao.supprimer(reservation)
+    fun supprimer(reservation: Reservation) {
+        dao.supprimer(reservation)
+    }
 }
