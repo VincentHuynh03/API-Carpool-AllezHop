@@ -1,3 +1,10 @@
 package com.example.allezhop.Modèles
 
-data class Reservation(var code : Int)
+import java.sql.Time
+import java.sql.Timestamp
+
+data class Reservation( var code : Int,
+                        var horodatage : Timestamp,
+                        var trajet_code: Int,
+                        var utilisateur_code: Int) {
+    }

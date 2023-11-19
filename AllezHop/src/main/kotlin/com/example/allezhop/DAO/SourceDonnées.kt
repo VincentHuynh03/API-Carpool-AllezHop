@@ -6,8 +6,11 @@ import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
 
 import org.springframework.stereotype.Component
-import java.sql.Time
 
+import java.sql.Time
+import java.sql.Timestamp
+
+import java.util.Date
 @Component
 class SourceDonnées {
     companion object {
@@ -23,9 +26,9 @@ class SourceDonnées {
 
         )
         val reservations = mutableListOf(
-            Reservation(1),
-            Reservation(2) ,
-            Reservation(3),
+            Reservation(1, Timestamp(Date().time), 101, 201),
+            Reservation(2, Timestamp(Date().time), 102, 202),
+            Reservation(3, Timestamp(Date().time), 103, 203)
         )
         val notifications = mutableListOf(
             Notification(1),
