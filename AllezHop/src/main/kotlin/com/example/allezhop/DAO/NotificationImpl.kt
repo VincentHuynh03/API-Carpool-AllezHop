@@ -13,12 +13,9 @@ class NotificationImpl():  NotificationDAO {
 
 
     override fun chercherTous(): List<Notification> = SourceDonnées.notifications
-
-
-    override fun chercherParCode(code: String): List<Notification>? {
-        TODO()
+    override fun chercherParCode(code: String): Notification? {
+        TODO("Not yet implemented")
     }
-
 
 
     override fun modifier(code: String, notification: Notification): Notification? {

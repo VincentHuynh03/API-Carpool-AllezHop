@@ -6,7 +6,7 @@ interface UtilisateurDAO : DAO<Utilisateur> {
 
     override fun chercherTous(): List<Utilisateur>
 
-    override fun chercherParCode(code: String): List<Utilisateur>?
+    override fun chercherParCode(code: String): Utilisateur?
 
 
 

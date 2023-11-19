@@ -3,7 +3,9 @@ package com.example.allezhop.DAO
 import com.example.allezhop.Modèles.Reservation
 import com.example.allezhop.Modèles.Trajet
 import crosemont.tdi.g66.restaurantapirest.DAO.SourceDonnées
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 
 
@@ -25,9 +27,13 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
 
 
 
-    override fun chercherParCode(code: String): List<Reservation> {
+    override fun chercherParCode(code: String): Reservation? {
         val sql = "SELECT * FROM réservation WHERE code = ?"
-        return db.query(sql, arrayOf(code)) { response, _ ->
+
+        return db.queryForObject(
+            sql,
+            arrayOf<Any>(code)
+        ) { response, _ ->
             Reservation(
                 code = response.getInt("code"),
                 horodatage = response.getTimestamp("horodatage"),
@@ -36,6 +42,10 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             )
         }
     }
+
+
+
+
 
 
 

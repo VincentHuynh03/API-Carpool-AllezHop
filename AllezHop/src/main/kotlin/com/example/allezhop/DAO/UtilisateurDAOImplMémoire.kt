@@ -3,6 +3,7 @@ package com.example.allezhop.DAO
 import com.example.allezhop.Modèles.Utilisateur
 import crosemont.tdi.g66.restaurantapirest.DAO.SourceDonnées
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 import org.springframework.jdbc.core.query
 
@@ -18,12 +19,22 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
 
-    override fun chercherParCode(code: String): List<Utilisateur>? = db.query("select * from utilisateur where code = ?", code) { response, _ ->
-        Utilisateur(response.getInt("code"),
-            response.getString("nom"),
-            response.getString("prénom"),
-            response.getString("courriel"),
-            response.getString("mot_de_passe"))
+    override fun chercherParCode(code: String): Utilisateur? {
+        val sql = "SELECT * FROM utilisateur WHERE code = ?"
+        val results = db.query(
+            sql,
+            arrayOf(code)
+        ) { response, _ ->
+            Utilisateur(
+                code = response.getInt("code"),
+                nom = response.getString("nom"),
+                prénom = response.getString("prénom"),
+                courriel = response.getString("courriel"),
+                mot_de_passe = response.getString("mot_de_passe")
+            )
+        }
+
+        return results.firstOrNull()
     }
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
