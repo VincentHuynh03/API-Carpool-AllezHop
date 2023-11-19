@@ -23,9 +23,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
 
 
 
-    override fun modifier(code: String, reservation: Reservation): Reservation? {
-        TODO("Not yet implemented")
-    }
+
 
 
     override fun ajouter(reservation: Reservation): Reservation? {
@@ -45,6 +43,21 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
         val sql = "DELETE FROM your_reservation_table WHERE code = ?"
         db.update(sql, reservation.code)
         return reservation
+    }
+
+    override fun modifier(code: String, reservation: Reservation): Reservation? {
+        val sql =
+            "UPDATE your_reservation_table SET horodatage = ?, trajet_code = ?, utilisateur_code = ? WHERE code = ?"
+
+        val modifier = db.update(
+            sql,
+            reservation.horodatage,
+            reservation.trajet_code,
+            reservation.utilisateur_code,
+            code
+        )
+        return if (modifier > 0) reservation else null
+
     }
 }
 
