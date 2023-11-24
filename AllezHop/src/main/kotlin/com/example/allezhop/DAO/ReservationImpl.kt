@@ -1,11 +1,8 @@
 package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Reservation
-import com.example.allezhop.Modèles.Trajet
-import crosemont.tdi.g66.restaurantapirest.DAO.SourceDonnées
-import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.jdbc.core.query
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 
 
@@ -20,27 +17,20 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             code = response.getInt("code"),
             horodatage = response.getTimestamp("horodatage"),
             trajet_code = response.getInt("trajet_code"),
-            utilisateur_code = response.getInt("utilisateur_code")
+            passager = response.getInt("utilisateur_code")
         )
     }
 
 
 
 
-    override fun chercherParCode(code: String): Reservation? {
-        val sql = "SELECT * FROM réservation WHERE code = ?"
-
-        return db.queryForObject(
-            sql,
-            arrayOf<Any>(code)
-        ) { response, _ ->
-            Reservation(
-                code = response.getInt("code"),
-                horodatage = response.getTimestamp("horodatage"),
-                trajet_code = response.getInt("trajet_code"),
-                utilisateur_code = response.getInt("utilisateur_code")
-            )
-        }
+    override fun chercherParCode(code: Int): List<Reservation>? = db.query("select * from réservation where code = ?", code) { response, _ ->
+        Reservation(
+            code = response.getInt("code"),
+            horodatage = response.getTimestamp("horodatage"),
+            trajet_code = response.getInt("trajet_code"),
+            passager = response.getInt("utilisateur_code")
+        )
     }
 
 
@@ -59,7 +49,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             reservation.code,
             reservation.horodatage,
             reservation.trajet_code,
-            reservation.utilisateur_code
+            reservation.passager
         )
         return reservation
     }
@@ -79,7 +69,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             sql,
             reservation.horodatage,
             reservation.trajet_code,
-            reservation.utilisateur_code,
+            reservation.passager,
             code
         )
         return if (modifier > 0) reservation else null

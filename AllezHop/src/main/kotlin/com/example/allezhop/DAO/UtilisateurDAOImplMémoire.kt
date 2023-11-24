@@ -19,7 +19,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
 
-    override fun chercherParCode(code: String): Utilisateur? {
+    override fun chercherParCode(code: Int): List<Utilisateur>? {
         val sql = "SELECT * FROM utilisateur WHERE code = ?"
         val results = db.query(
             sql,
@@ -34,7 +34,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             )
         }
 
-        return results.firstOrNull()
+        return results
     }
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {

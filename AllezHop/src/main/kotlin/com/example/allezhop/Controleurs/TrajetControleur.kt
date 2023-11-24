@@ -19,10 +19,7 @@ class TrajetControleur(val service: TrajetService) {
     fun obtenirTrajets() = service.chercherTous()
 
     @GetMapping("/trajets/{code}")
-    fun obtenirTrajetsParCode(@PathVariable code: String) {
-        service.chercherParCode(code)
-            ?: throw IntrouvableException("Le trajet est INTROUVABLE. Écran Bleu si je pouvais.")
-    }
+    fun obtenirTrajetsParCode(@PathVariable code: String) = service.chercherParCode(code)
 
     @PostMapping("/trajets")
     fun ajouterTrajet(@RequestBody trajet: Trajet): ResponseEntity<Trajet> {
@@ -38,7 +35,7 @@ class TrajetControleur(val service: TrajetService) {
     fun supprimerTrajet(@PathVariable code: String): ResponseEntity<Unit> {
         val trajet = service.chercherParCode(code)
             ?: throw IntrouvableException("Le trajet est INTROUVABLE. Écran Bleu si je pouvais.")
-        service.supprimer(trajet)
+        service.supprimer(trajet.first())
         return ResponseEntity.noContent().build()
     }
 

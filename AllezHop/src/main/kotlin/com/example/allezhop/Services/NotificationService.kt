@@ -11,7 +11,7 @@ class NotificationService(val dao: NotificationDAO) {
 
 
     fun chercherTous(): List<Notification> = dao.chercherTous()
-    fun chercherParCode(code: String): Notification? = dao.chercherParCode(code)
+    fun chercherParCode(code: String): List<Notification>? = dao.chercherParCode(code.toInt())
 
     fun ajouter(notification: Notification) = dao.ajouter(notification)
 

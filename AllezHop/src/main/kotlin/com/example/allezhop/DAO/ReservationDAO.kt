@@ -7,7 +7,7 @@ interface ReservationDAO : DAO<Reservation> {
 
     override fun chercherTous(): List<Reservation>
 
-    override fun chercherParCode(code: String): Reservation?
+    override fun chercherParCode(code: Int): List<Reservation>?
 
     override fun supprimer(reservation: Reservation): Reservation?
 

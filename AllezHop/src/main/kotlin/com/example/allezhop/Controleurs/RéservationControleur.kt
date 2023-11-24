@@ -19,10 +19,7 @@ class RéservationControleur(val service: ReservationService) {
     fun obtenirReservations() = service.chercherTous()
 
     @GetMapping("/reservations/{code}")
-    fun obtenirReservationParCode(@PathVariable code: String) {
-        service.chercherParCode(code)?: throw IntrouvableException("La reservation  est INTROUVABLE. Écran Bleu si je pouvais.")
-    }
-
+    fun obtenirReservationParCode(@PathVariable code: String) = service.chercherParCode(code)
     @PostMapping("/reservations")
     fun ajouterReservation(@RequestBody reservation: Reservation): ResponseEntity<Reservation> {
         val reservationAdded = service.ajouter(reservation)
@@ -34,7 +31,7 @@ class RéservationControleur(val service: ReservationService) {
     }
     @DeleteMapping("/reservations/{code}")
     fun supprimerReservation(@PathVariable code: String): ResponseEntity<Unit> {
-        val reservation = service.chercherParCode(code)
+        val reservation = service.chercherParCode(code)?.first()
             ?: throw IntrouvableException("La reservation est INTROUVABLE. Écran Bleu si je pouvais.")
 
         service.supprimer(reservation)

@@ -5,7 +5,7 @@ import com.example.allezhop.Modèles.Trajet
 interface TrajetDAO : DAO<Trajet> {
     override fun chercherTous(): List<Trajet>
 
-    override fun chercherParCode(code: String): Trajet?
+    override fun chercherParCode(code: Int): List<Trajet>?
 
     override fun supprimer(trajet: Trajet): Trajet?
 

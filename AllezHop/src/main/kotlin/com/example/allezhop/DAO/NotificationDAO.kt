@@ -7,7 +7,7 @@ interface NotificationDAO : DAO<Notification> {
 
     override fun chercherTous(): List<Notification>
 
-    override fun chercherParCode(code: String): Notification?
+    override fun chercherParCode(code: Int): List<Notification>?
 
     override fun supprimer(notification: Notification): Notification?
 
