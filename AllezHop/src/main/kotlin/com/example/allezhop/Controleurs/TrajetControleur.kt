@@ -21,6 +21,9 @@ class TrajetControleur(val service: TrajetService) {
     @GetMapping("/trajets/{code}")
     fun obtenirTrajetsParCode(@PathVariable code: String) = service.chercherParCode(code)
 
+    @GetMapping("/trajets/conducteurs/{code}")
+    fun obtenirTrajetsParConducteur(@PathVariable code: String) = service.chercherParConducteur(code)
+
     @PostMapping("/trajets")
     fun ajouterTrajet(@RequestBody trajet: Trajet): ResponseEntity<Trajet> {
         val trajetAdded: Trajet? = service.ajouter(trajet)

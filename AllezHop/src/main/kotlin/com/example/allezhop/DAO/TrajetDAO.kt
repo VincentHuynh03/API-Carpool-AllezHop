@@ -7,6 +7,8 @@ interface TrajetDAO : DAO<Trajet> {
 
     override fun chercherParCode(code: Int): List<Trajet>?
 
+    fun chercherParConducteur(code : Int): List<Trajet>?
+
     override fun supprimer(trajet: Trajet): Trajet?
 
 

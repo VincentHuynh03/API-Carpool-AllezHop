@@ -30,6 +30,15 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             response.getInt("utilisateur_code"))
     }
 
+    override fun chercherParConducteur(code: Int): List<Trajet>? = db.query("select * from Trajet where utilisateur_code = ?", code) { response, _ ->
+        Trajet(response.getInt("code"),
+            response.getString("destination"),
+            response.getString("position_départ"),
+            response.getTime("heure_arrivée"),
+            response.getTime("heure_départ_max"),
+            response.getInt("utilisateur_code"))
+    }
+
 
     override fun ajouter(trajet: Trajet): Trajet? {
         val insertQuery = "insert into trajet (code, destination, position_départ, heure_arrivée, heure_départ_max, utilisateur_code) values (?, ?, ?, ?, ?, ?)"

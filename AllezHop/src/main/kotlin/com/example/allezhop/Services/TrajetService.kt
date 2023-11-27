@@ -12,6 +12,8 @@ class TrajetService(val dao: TrajetDAO) {
 
     fun chercherParCode(code: String): List<Trajet>? = dao.chercherParCode(code.toInt())
 
+    fun chercherParConducteur(code: String): List<Trajet>? = dao.chercherParConducteur(code.toInt())
+
 
     fun ajouter(trajet: Trajet) = dao.ajouter(trajet)
 
