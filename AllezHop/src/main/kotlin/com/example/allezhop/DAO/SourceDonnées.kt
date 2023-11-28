@@ -1,13 +1,9 @@
 package crosemont.tdi.g66.restaurantapirest.DAO
 
-import com.example.allezhop.Modèles.Notification
 import com.example.allezhop.Modèles.Reservation
-import com.example.allezhop.Modèles.Trajet
-import com.example.allezhop.Modèles.Utilisateur
 
 import org.springframework.stereotype.Component
 
-import java.sql.Time
 import java.sql.Timestamp
 
 import java.util.Date
@@ -25,15 +21,10 @@ class SourceDonnées {
             Trajet(3, "Destination3", "Departure3", Time.valueOf("15:00:00"), Time.valueOf("17:00:00"), 103),
 
         )*/
-        val reservations = mutableListOf(
+        /*val reservations = mutableListOf(
             Reservation(1, Timestamp(Date().time), 101, 201),
             Reservation(2, Timestamp(Date().time), 102, 202),
             Reservation(3, Timestamp(Date().time), 103, 203)
-        )
-        val notifications = mutableListOf(
-            Notification(1),
-            Notification(2) ,
-            Notification(3),
-        )
+        )*/
     }
 }
