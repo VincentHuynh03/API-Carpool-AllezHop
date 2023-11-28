@@ -11,11 +11,11 @@ import org.springframework.jdbc.core.query
 class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun chercherTous(): List<Utilisateur> = db.query("select * from utilisateur") { response, _ ->
-        Utilisateur(response.getInt("code"),
+        Utilisateur(
             response.getString("nom"),
             response.getString("prénom"),
             response.getString("courriel"),
-            response.getString("mot_de_passe"))
+            )
     }
 
 
@@ -26,11 +26,11 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             arrayOf(code)
         ) { response, _ ->
             Utilisateur(
-                code = response.getInt("code"),
+
                 nom = response.getString("nom"),
                 prénom = response.getString("prénom"),
                 courriel = response.getString("courriel"),
-                mot_de_passe = response.getString("mot_de_passe")
+
             )
         }
 
@@ -40,11 +40,10 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
         val insertQuery = "insert into utilisateur (code, nom, prénom, courriel, mot_de_passe) values (?, ?, ?, ?, ?)"
         db.update(insertQuery,
-            utilisateur.code,
             utilisateur.nom,
             utilisateur.prénom,
-            utilisateur.courriel,
-            utilisateur.mot_de_passe)
+            utilisateur.courriel)
+
         return utilisateur
     }
 
@@ -54,7 +53,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             utilisateur.nom,
             utilisateur.prénom,
             utilisateur.courriel,
-            utilisateur.mot_de_passe,
+
             code)
         return utilisateur
     }
@@ -62,7 +61,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun supprimer(utilisateur: Utilisateur): Utilisateur? {
         val deleteQuery = "delete from utilisateur where code = ?"
-        db.update(deleteQuery, utilisateur.code)
+        db.update(deleteQuery, utilisateur)
         return utilisateur
     }
 
