@@ -21,16 +21,11 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun chercherParCode(code: Int): List<Utilisateur>? {
         val sql = "SELECT * FROM utilisateur WHERE code = ?"
-        val results = db.query(
-            sql,
-            arrayOf(code)
-        ) { response, _ ->
+        val results = db.query(sql, code) { response, _ ->
             Utilisateur(
-
-                nom = response.getString("nom"),
-                prénom = response.getString("prénom"),
-                courriel = response.getString("courriel"),
-
+                response.getString("nom"),
+                response.getString("prénom"),
+                response.getString("courriel")
             )
         }
 
@@ -38,7 +33,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
-        val insertQuery = "insert into utilisateur (code, nom, prénom, courriel, mot_de_passe) values (?, ?, ?, ?, ?)"
+        val insertQuery = "insert into utilisateur (code, nom, prénom, courriel) values (?, ?, ?, ?, ?)"
         db.update(insertQuery,
             utilisateur.nom,
             utilisateur.prénom,
@@ -48,12 +43,11 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
     override fun modifier(code: String, utilisateur: Utilisateur): Utilisateur? {
-        val updateQuery = "update utilisateur set nom=?, prénom=?, courriel=?, mot_de_passe=? where code=?"
+        val updateQuery = "update utilisateur set nom=?, prénom=?, courriel=? where code=?"
         db.update(updateQuery,
             utilisateur.nom,
             utilisateur.prénom,
             utilisateur.courriel,
-
             code)
         return utilisateur
     }
