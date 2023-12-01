@@ -14,6 +14,6 @@ interface UtilisateurDAO : DAO<Utilisateur> {
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur?
 
-    override fun supprimer(utilisateur: Utilisateur): Utilisateur?
+    override fun supprimer(code: String)
 
 }

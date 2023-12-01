@@ -33,13 +33,52 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
-    override fun chercherParConducteur(code: Int): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where conducteur = ?", code) { response, _ ->
+    fun chercherParConducteurCode(code: Int): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where conducteur = ?", code) { response, _ ->
         Trajet(response.getInt("code"),
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
             Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+    }
+
+    override fun chercherParConducteurNom(nom: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where utilisateur.nom like ?", nom) { response, _ ->
+        Trajet(response.getInt("code"),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTime("heure_arrivée"),
+            response.getTime("heure_départ_max"),
+            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+    }
+
+    override fun chercherParDate(date: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where heure_arrivée like ?'%'", date) { response, _ ->
+        Trajet(response.getInt("code"),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTime("heure_arrivée"),
+            response.getTime("heure_départ_max"),
+            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+    }
+
+    override fun chercherParHeure(heure: String): List<Trajet>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun chercherParVille(ville: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where adresse.ville like ?", ville) { response, _ ->
+        Trajet(response.getInt("code"),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTime("heure_arrivée"),
+            response.getTime("heure_départ_max"),
+            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+    }
+
+    override fun chercherParÉtat(état: String): List<Trajet>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun chercherParPays(pays: String): List<Trajet>? {
+        TODO("Not yet implemented")
     }
 
 
@@ -66,10 +105,9 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             code)
         return trajet
     }
-    override fun supprimer(trajet: Trajet): Trajet? {
-        val deleteQuery = "delete from trajet where code = ?"
-        db.update(deleteQuery, trajet.code)
-        return trajet
+    override fun supprimer(code: String) {
+        val sql = "DELETE FROM réservation WHERE code = ?"
+        db.update(sql, code)
     }
 
 }

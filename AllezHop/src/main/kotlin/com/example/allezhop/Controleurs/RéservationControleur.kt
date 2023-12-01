@@ -31,10 +31,7 @@ class RéservationControleur(val service: ReservationService) {
     }
     @DeleteMapping("/reservations/{code}")
     fun supprimerReservation(@PathVariable code: String): ResponseEntity<Unit> {
-        val reservation = service.chercherParCode(code)?.first()
-            ?: throw IntrouvableException("La reservation est INTROUVABLE. Écran Bleu si je pouvais.")
-
-        service.supprimer(reservation)
+        service.supprimer(code)
         return ResponseEntity.noContent().build()
     }
 

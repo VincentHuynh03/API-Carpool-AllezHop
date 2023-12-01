@@ -53,10 +53,9 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
 
-    override fun supprimer(utilisateur: Utilisateur): Utilisateur? {
+    override fun supprimer(utilisateur: String) {
         val deleteQuery = "delete from utilisateur where code = ?"
         db.update(deleteQuery, utilisateur)
-        return utilisateur
     }
 
 }

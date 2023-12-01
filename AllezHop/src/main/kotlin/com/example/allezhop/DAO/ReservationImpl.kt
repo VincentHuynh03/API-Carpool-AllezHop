@@ -55,10 +55,9 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
     }
 
 
-    override fun supprimer(reservation: Reservation): Reservation? {
+    override fun supprimer(code: String) {
         val sql = "DELETE FROM réservation WHERE code = ?"
-        db.update(sql, reservation.code)
-        return reservation
+        db.update(sql, code)
     }
 
     override fun modifier(code: String, reservation: Reservation): Reservation? {

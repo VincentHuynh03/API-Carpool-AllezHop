@@ -12,12 +12,20 @@ class TrajetService(val dao: TrajetDAO) {
 
     fun chercherParCode(code: String): List<Trajet>? = dao.chercherParCode(code.toInt())
 
-    fun chercherParConducteur(code: String): List<Trajet>? = dao.chercherParConducteur(code.toInt())
+    //fun chercherParConducteurCode(code: String): List<Trajet>? = dao.chercherParConducteurCode(code.toInt())
+
+    fun chercherParConducteurNom(nom: String): List<Trajet>? = dao.chercherParConducteurNom(nom)
+
+    fun chercherParDate(date: String): List<Trajet>? = dao.chercherParDate(date)
+
+    fun chercherParVille(ville: String): List<Trajet>? = dao.chercherParVille(ville)
 
 
     fun ajouter(trajet: Trajet) = dao.ajouter(trajet)
 
+    fun modifier(code: String, trajet: Trajet) = dao.modifier(code, trajet)
 
-    fun supprimer(trajet: Trajet) = dao.supprimer(trajet)
+
+    fun supprimer(code: String) = dao.supprimer(code)
 
 }

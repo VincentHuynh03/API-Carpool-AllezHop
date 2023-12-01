@@ -9,7 +9,7 @@ interface ReservationDAO : DAO<Reservation> {
 
     override fun chercherParCode(code: Int): List<Reservation>?
 
-    override fun supprimer(reservation: Reservation): Reservation?
+    override fun supprimer(code: String)
 
     override fun modifier(code: String, reservation: Reservation): Reservation?
 

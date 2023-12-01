@@ -15,6 +15,6 @@ class UtilisateurService(val dao: UtilisateurDAO) {
     fun ajouter(utilisateur: Utilisateur) = dao.ajouter(utilisateur)
 
 
-    fun supprimer(utilisateur: Utilisateur) = dao.supprimer(utilisateur)
+    fun supprimer(code: String) = dao.supprimer(code)
 
 }

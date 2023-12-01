@@ -14,8 +14,8 @@ class ReservationService(val dao: ReservationDAO) {
     fun ajouter(reservation: Reservation) = dao.ajouter(reservation)
 
 
-    fun supprimer(reservation: Reservation) {
-        dao.supprimer(reservation)
+    fun supprimer(code: String) {
+        dao.supprimer(code)
     }
 
 

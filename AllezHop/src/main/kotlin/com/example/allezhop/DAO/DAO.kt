@@ -7,7 +7,7 @@ interface DAO<T> {
 
     fun modifier(code: String ,unT: T): T?
 
-    fun supprimer(unT: T): T?
+    fun supprimer(code: String)
 
 
 }
