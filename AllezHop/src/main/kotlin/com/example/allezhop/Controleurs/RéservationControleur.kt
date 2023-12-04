@@ -19,7 +19,7 @@ class RéservationControleur(val service: ReservationService) {
     fun obtenirReservations() = service.chercherTous()
 
     @GetMapping("/reservations/{code}")
-    fun obtenirReservationParCode(@PathVariable code: String) = service.chercherParCode(code)
+    fun obtenirReservationParCode(@PathVariable code: Int) = service.chercherParCode(code) ?: throw IntrouvableException("La reservation $code n'est pas inscrit au service.")
     @PostMapping("/reservations")
     fun ajouterReservation(@RequestBody reservation: Reservation): ResponseEntity<Reservation> {
         val reservationAdded = service.ajouter(reservation)

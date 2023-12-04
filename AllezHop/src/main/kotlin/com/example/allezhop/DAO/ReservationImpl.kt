@@ -17,21 +17,26 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             code = response.getInt("code"),
             horodatage = response.getTimestamp("horodatage"),
             trajet_code = response.getInt("trajet_code"),
-            passager = response.getInt("utilisateur_code")
+            passager = response.getInt("passager")
         )
     }
 
 
 
 
-    override fun chercherParCode(code: Int): List<Reservation>? = db.query("select * from réservation where code = ?", code) { response, _ ->
-        Reservation(
-            code = response.getInt("code"),
-            horodatage = response.getTimestamp("horodatage"),
-            trajet_code = response.getInt("trajet_code"),
-            passager = response.getInt("utilisateur_code")
-        )
+    override fun chercherParCode(code: Int): List<Reservation>? {
+        val result = db.query("select * from réservation where code = ?", code) { response, _ ->
+            Reservation(
+                code = response.getInt("code"),
+                horodatage = response.getTimestamp("horodatage"),
+                trajet_code = response.getInt("trajet_code"),
+                passager = response.getInt("passager")
+            )
+        }
+
+        return if (result.isEmpty()) null else result
     }
+
 
 
 
