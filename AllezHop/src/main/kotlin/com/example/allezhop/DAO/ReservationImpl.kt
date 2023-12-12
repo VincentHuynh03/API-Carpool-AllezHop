@@ -17,7 +17,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             code = response.getInt("code"),
             horodatage = response.getTimestamp("horodatage"),
             trajet_code = response.getInt("trajet_code"),
-            passager = response.getInt("passager")
+            passager = response.getInt("utilisateur_code")
         )
     }
 
@@ -30,7 +30,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
                 code = response.getInt("code"),
                 horodatage = response.getTimestamp("horodatage"),
                 trajet_code = response.getInt("trajet_code"),
-                passager = response.getInt("passager")
+                passager = response.getInt("utilisateur_code")
             )
         }
 
