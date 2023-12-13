@@ -14,10 +14,10 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
     override fun chercherTous(): List<Trajet> = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code") { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"))
         )
     }
@@ -26,37 +26,37 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
     override fun chercherParCode(code: Int): List<Trajet>?  = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where trajet.code = ?", code) { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     fun chercherParConducteurCode(code: Int): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where conducteur = ?", code) { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParConducteurNom(nom: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where utilisateur.nom like ?", nom) { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParDate(date: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where heure_arrivée like ?'%'", date) { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
@@ -66,10 +66,10 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
     override fun chercherParVille(ville: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where adresse.ville like ?", ville) { response, _ ->
         Trajet(response.getInt("code"),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
-            response.getTime("heure_arrivée"),
-            response.getTime("heure_départ_max"),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            Adresse(response.getInt("code"), response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
+            response.getTimestamp("heure_arrivée").toLocalDateTime(),
+            response.getTimestamp("heure_départ_max").toLocalDateTime(),
             Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
@@ -83,10 +83,10 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
 
     override fun ajouter(trajet: Trajet): Trajet? {
-        val insertQuery = "insert into trajet (destination, position_départ, heure_arrivée, heure_départ_max, utilisateur_code) values (?, ?, ?, ?, ?)"
+        val insertQuery = "insert into trajet (destination, position_départ, heure_arrivée, heure_départ_max, conducteur) values (?, ?, ?, ?, ?)"
         db.update(insertQuery,
-            trajet.destination,
-            trajet.position_départ,
+            trajet.destination.code,
+            trajet.position_départ.code,
             trajet.heure_arrivée,
             trajet.heure_départ_max,
             trajet.conducteur.code)
