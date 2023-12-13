@@ -12,6 +12,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun chercherTous(): List<Utilisateur> = db.query("select * from utilisateur") { response, _ ->
         Utilisateur(
+            response.getInt("code"),
             response.getString("nom"),
             response.getString("prénom"),
             response.getString("courriel"),
@@ -23,6 +24,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         val sql = "SELECT * FROM utilisateur WHERE code = ?"
         val results = db.query(sql, code) { response, _ ->
             Utilisateur(
+                response.getInt("code"),
                 response.getString("nom"),
                 response.getString("prénom"),
                 response.getString("courriel")
@@ -33,7 +35,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
-        val insertQuery = "insert into utilisateur (code, nom, prénom, courriel) values (?, ?, ?, ?, ?)"
+        val insertQuery = "insert into utilisateur (nom, prénom, courriel) values (?, ?, ?)"
         db.update(insertQuery,
             utilisateur.nom,
             utilisateur.prénom,

@@ -2,6 +2,7 @@ package com.example.allezhop.Controleurs
 
 import com.example.allezhop.Services.TrajetService
 import com.example.allezhop.DAO.IntrouvableException
+import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
 import org.springframework.http.ResponseEntity

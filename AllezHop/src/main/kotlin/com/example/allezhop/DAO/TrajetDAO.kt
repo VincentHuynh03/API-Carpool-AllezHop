@@ -1,5 +1,6 @@
 package com.example.allezhop.DAO
 
+import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
 import javax.print.attribute.standard.Destination
 

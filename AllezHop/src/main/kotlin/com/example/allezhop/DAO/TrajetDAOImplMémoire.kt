@@ -6,7 +6,7 @@ import com.example.allezhop.Modèles.Utilisateur
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import org.springframework.jdbc.core.query
-
+import javax.print.attribute.standard.Destination
 
 
 @Repository
@@ -18,7 +18,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel"))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"))
         )
     }
 
@@ -30,7 +30,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     fun chercherParConducteurCode(code: Int): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where conducteur = ?", code) { response, _ ->
@@ -39,7 +39,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParConducteurNom(nom: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where utilisateur.nom like ?", nom) { response, _ ->
@@ -48,7 +48,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParDate(date: String): List<Trajet>? = db.query("select * from trajet join adresse on trajet.destination = adresse.id join utilisateur on trajet.conducteur = utilisateur.code where heure_arrivée like ?'%'", date) { response, _ ->
@@ -57,7 +57,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParHeure(heure: String): List<Trajet>? {
@@ -70,7 +70,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getString("appartement"),response.getString("numéro_municipal"), response.getString("rue"), response.getString("ville"), response.getString("état"), response.getString("code_postal"), response.getString("pays")),
             response.getTime("heure_arrivée"),
             response.getTime("heure_départ_max"),
-            Utilisateur(response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+            Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
     }
 
     override fun chercherParÉtat(état: String): List<Trajet>? {
@@ -83,14 +83,13 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
 
 
     override fun ajouter(trajet: Trajet): Trajet? {
-        val insertQuery = "insert into trajet (code, destination, position_départ, heure_arrivée, heure_départ_max, utilisateur_code) values (?, ?, ?, ?, ?, ?)"
+        val insertQuery = "insert into trajet (destination, position_départ, heure_arrivée, heure_départ_max, utilisateur_code) values (?, ?, ?, ?, ?)"
         db.update(insertQuery,
-            trajet.code,
             trajet.destination,
             trajet.position_départ,
             trajet.heure_arrivée,
             trajet.heure_départ_max,
-            trajet.conducteur)
+            trajet.conducteur.code)
         return trajet
     }
 

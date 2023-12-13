@@ -6,6 +6,7 @@ import com.example.allezhop.Modèles.Utilisateur
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
 import java.util.*
 
 
@@ -21,25 +22,30 @@ class UtilisateurControleur(val service: UtilisateurService) {
     fun obtenirUtilisateursParCode(@PathVariable code: String) {
         service.chercherParCode(code)?: throw IntrouvableException("L'utilisateur  est INTROUVABLE.")
     }
-/*
+
     @PostMapping(value = ["/utilisateurs"])
     fun ajouterUtilisateur(@RequestBody utilisateur: Utilisateur): ResponseEntity<Utilisateur> {
         val productAdded: Utilisateur? = service.ajouter(utilisateur)
-        if (Objects.isNull(productAdded)) {
-            return ResponseEntity.noContent().build<Utilisateur?>()
+        return if (productAdded != null) {
+            ResponseEntity.created(location(productAdded.code)).body(productAdded)
+        } else{
+            ResponseEntity.noContent().build()
         }
-        val location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{code}")
-            .buildAndExpand(productAdded?.code)
-            .toUri()
-        return ResponseEntity.created(location).build<Utilisateur?>()
 
     }
+    /*
     @DeleteMapping("/utilisateurs")
     fun supprimerUtilisateur(@RequestBody utilisateur: Utilisateur) {
         service.supprimer(utilisateur)
     }
     */
+
+    private fun location(code: Int): URI {
+        return ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{code}")
+            .buildAndExpand(code)
+            .toUri()
+    }
 
 }

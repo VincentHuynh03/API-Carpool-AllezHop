@@ -1,6 +1,7 @@
 package com.example.allezhop.Services
 
 import com.example.allezhop.DAO.TrajetDAO
+import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
 import org.springframework.stereotype.Service
@@ -19,7 +20,6 @@ class TrajetService(val dao: TrajetDAO) {
     fun chercherParDate(date: String): List<Trajet>? = dao.chercherParDate(date)
 
     fun chercherParVille(ville: String): List<Trajet>? = dao.chercherParVille(ville)
-
 
     fun ajouter(trajet: Trajet) = dao.ajouter(trajet)
 
