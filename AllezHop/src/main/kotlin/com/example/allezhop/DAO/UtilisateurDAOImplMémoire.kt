@@ -44,7 +44,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         return utilisateur
     }
 
-    override fun modifier(code: String, utilisateur: Utilisateur): Utilisateur? {
+    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
         val updateQuery = "update utilisateur set nom=?, prénom=?, courriel=? where code=?"
         db.update(updateQuery,
             utilisateur.nom,

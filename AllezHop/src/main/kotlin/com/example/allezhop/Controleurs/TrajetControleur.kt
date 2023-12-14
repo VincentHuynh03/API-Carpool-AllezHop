@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -28,7 +30,11 @@ class TrajetControleur(val service: TrajetService) {
     fun obtenirTrajetsParConducteurNom(@PathVariable nom: String) = service.chercherParConducteurNom(nom)
 
     @GetMapping("/trajets/date/{date}")
-    fun obtenirTrajetsParDate(@PathVariable date: String) = service.chercherParDate(date)
+    fun obtenirTrajetsParDate(@PathVariable date: String): List<Trajet>?{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val dateEnDate = LocalDateTime.parse(date, formatter)
+        return service.chercherParDate(dateEnDate)
+    }
 
     @GetMapping("/trajets/ville/{ville}")
     fun obtenirTrajetsParVille(@PathVariable ville: String) = service.chercherParVille(ville)
@@ -43,8 +49,8 @@ class TrajetControleur(val service: TrajetService) {
         }
     }
 
-    @PutMapping("/trajets")
-    fun modifierTrajet(@PathVariable code: String, @RequestBody trajet: Trajet) = service.modifier(code, trajet)
+    @PutMapping("/trajets/{code}")
+    fun modifierTrajet(@PathVariable code: Int, @RequestBody trajet: Trajet) = service.modifier(code, trajet)
 
     @DeleteMapping("/trajets/{code}")
     fun supprimerTrajet(@PathVariable code: String): ResponseEntity<Unit> {

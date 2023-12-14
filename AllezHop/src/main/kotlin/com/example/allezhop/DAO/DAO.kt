@@ -5,7 +5,7 @@ interface DAO<T> {
     fun chercherParCode(code: Int): List<T>?
     fun ajouter(unT: T): T?
 
-    fun modifier(code: String ,unT: T): T?
+    fun modifier(code: Int ,unT: T): T?
 
     fun supprimer(code: String)
 

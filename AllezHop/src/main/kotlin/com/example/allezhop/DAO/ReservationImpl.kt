@@ -64,7 +64,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
         db.update(sql, code)
     }
 
-    override fun modifier(code: String, reservation: Reservation): Reservation? {
+    override fun modifier(code: Int, reservation: Reservation): Reservation? {
         val sql =
             "UPDATE réservation SET horodatage = ?, trajet_code = ?, utilisateur_code = ? WHERE code = ?"
 

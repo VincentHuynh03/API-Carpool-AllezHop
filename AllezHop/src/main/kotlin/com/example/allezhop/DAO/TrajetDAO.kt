@@ -2,6 +2,7 @@ package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
+import java.time.LocalDateTime
 import javax.print.attribute.standard.Destination
 
 interface TrajetDAO : DAO<Trajet> {
@@ -11,7 +12,7 @@ interface TrajetDAO : DAO<Trajet> {
 
     fun chercherParConducteurNom(nom : String): List<Trajet>?
 
-    fun chercherParDate(date: String): List<Trajet>?
+    fun chercherParDate(date: LocalDateTime): List<Trajet>?
 
     fun chercherParHeure(heure: String): List<Trajet>?
 
@@ -24,7 +25,7 @@ interface TrajetDAO : DAO<Trajet> {
     override fun supprimer(code: String)
 
 
-    override fun modifier(code: String, trajet: Trajet): Trajet?
+    override fun modifier(code: Int, trajet: Trajet): Trajet?
 
     override fun ajouter(trajet: Trajet): Trajet?
 }
