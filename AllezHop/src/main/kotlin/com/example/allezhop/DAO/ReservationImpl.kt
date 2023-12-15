@@ -1,11 +1,12 @@
 package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Reservation
+import com.example.allezhop.Modèles.Trajet
 import org.springframework.jdbc.core.query
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
-
-
+import java.sql.Timestamp
+import java.time.LocalDateTime
 
 
 @Repository
@@ -37,15 +38,32 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
         return if (result.isEmpty()) null else result
     }
 
+    override fun chercherParPassagerNom(nom: String): List<Reservation>? {
+        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom " + "FROM réservation " + "JOIN utilisateur ON réservation.utilisateur_code = utilisateur.code " + "WHERE utilisateur.nom = ?", arrayOf(nom)) { response, _ ->
+            Reservation(
+                code = response.getInt("code"),
+                horodatage = response.getTimestamp("horodatage"),
+                trajet_code = response.getInt("trajet_code"),
+                passager = response.getInt("utilisateur_code")
+            )
+        }
 
+        return if (result.isEmpty()) null else result
+    }
 
+    override fun chercherParHorodatage(date: LocalDateTime): List<Reservation>? {
+        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom FROM réservation JOIN utilisateur ON réservation.utilisateur_code = utilisateur.code WHERE réservation.horodatage = ?", arrayOf(
+            Timestamp.valueOf(date))) { response, _ ->
+            Reservation(
+                code = response.getInt("code"),
+                horodatage = response.getTimestamp("horodatage"),
+                trajet_code = response.getInt("trajet_code"),
+                passager = response.getInt("utilisateur_code")
+            )
+        }
 
-
-
-
-
-
-
+        return if (result.isEmpty()) null else result
+    }
 
     override fun ajouter(reservation: Reservation): Reservation? {
         val sql = "INSERT INTO réservation (horodatage, trajet_code, utilisateur_code) VALUES (?, ?, ?)"
