@@ -36,7 +36,10 @@ class TrajetControleur(val service: TrajetService) {
 
     @GetMapping("/trajets/ville/{ville}")
     fun obtenirTrajetsParVille(@PathVariable ville: String) = service.chercherParVille(ville) ?: throw IntrouvableException("Le trajet avec la ville $ville n'existe pas")
-
+    @GetMapping("/trajets/état/{état}")
+    fun obtenirTrajetsParÉtat(@PathVariable état: String) = service.chercherParÉtat(état) ?: throw IntrouvableException("Le trajet avec l'état $état n'existe pas")
+    @GetMapping("/trajets/pays/{pays}")
+    fun obtenirTrajetsParPays(@PathVariable pays: String) = service.chercherParPays(pays) ?: throw IntrouvableException("Le trajet avec le pays $pays n'existe pas")
     @PostMapping("/trajets")
     fun ajouterTrajet(@RequestBody trajet: Trajet): ResponseEntity<Trajet> {
         val trajetAdded: Trajet? = service.ajouter(trajet)

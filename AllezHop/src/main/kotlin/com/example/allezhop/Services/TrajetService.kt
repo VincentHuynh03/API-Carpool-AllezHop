@@ -14,9 +14,10 @@ class TrajetService(val dao: TrajetDAO) {
 
     fun chercherParCode(code: String): List<Trajet>? = dao.chercherParCode(code.toInt())
 
-    //fun chercherParConducteurCode(code: String): List<Trajet>? = dao.chercherParConducteurCode(code.toInt())
+    fun chercherParPays(pays: String): List<Trajet>? = dao.chercherParPays(pays)
 
     fun chercherParConducteurNom(nom: String): List<Trajet>? = dao.chercherParConducteurNom(nom)
+    fun chercherParÉtat(état: String): List<Trajet>? = dao.chercherParÉtat(état)
 
     fun chercherParDate(date: LocalDateTime): List<Trajet>? = dao.chercherParDate(date)
 
