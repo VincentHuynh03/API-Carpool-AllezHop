@@ -2,6 +2,7 @@ package com.example.allezhop.Controleurs
 
 import com.example.allezhop.Services.UtilisateurService
 import com.example.allezhop.DAO.IntrouvableException
+import com.example.allezhop.Modèles.Reservation
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
 import org.springframework.http.ResponseEntity
@@ -31,20 +32,22 @@ class UtilisateurControleur(val service: UtilisateurService) {
 
     @PostMapping("/utilisateurs")
     fun ajouterTrajet(@RequestBody utilisateurs: Utilisateur): ResponseEntity<Utilisateur> {
-        val trajetAdded: Utilisateur? = service.ajouter(utilisateurs)
-        return if (trajetAdded != null) {
-            ResponseEntity.created(location(trajetAdded.code)).body(trajetAdded)
+        val utilisateurAdded: Utilisateur? = service.ajouter(utilisateurs)
+        return if (utilisateurAdded != null) {
+            ResponseEntity.created(location(utilisateurAdded.code)).body(utilisateurAdded)
         } else {
             ResponseEntity.noContent().build()
         }
     }
-    /*
-    @DeleteMapping("/utilisateurs")
-    fun supprimerUtilisateur(@RequestBody utilisateur: Utilisateur) {
-        service.supprimer(utilisateur)
-    }
-    */
 
+    @DeleteMapping("/utilisateurs/{code}")
+    fun supprimerReservation(@PathVariable code: String): ResponseEntity<Unit> {
+        service.supprimer(code)
+        return ResponseEntity.noContent().build()
+    }
+
+    @PutMapping("/utilisateurs/{code}")
+    fun modifierUtilisateur(@PathVariable code: Int, @RequestBody utilisateurs: Utilisateur) = service.modifier(code, utilisateurs)  ?: throw IntrouvableException("L'utilisateur avec le code $code n'existe pas")
     private fun location(code: Int): URI {
         return ServletUriComponentsBuilder
             .fromCurrentRequest()

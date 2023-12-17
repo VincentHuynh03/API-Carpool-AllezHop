@@ -22,4 +22,6 @@ class UtilisateurService(val dao: UtilisateurDAO) {
 
     fun supprimer(code: String) = dao.supprimer(code)
 
+    fun modifier(code: Int, utilisateur: Utilisateur) = dao.modifier(code, utilisateur)
+
 }

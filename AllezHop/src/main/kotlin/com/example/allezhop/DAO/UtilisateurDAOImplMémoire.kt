@@ -74,10 +74,24 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         return results
     }
 
+    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
+        val sql =
+            "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? WHERE code = ?"
+
+        val modifier = db.update(
+            sql,
+            utilisateur.nom,
+            utilisateur.prénom,
+            utilisateur.courriel,
+            code
+        )
+        return if (modifier > 0) utilisateur else null
+    }
+
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
-        val insertQuery = "insert into utilisateur (nom, prénom, courriel) values (?, ?, ?)"
-        db.update(insertQuery,
+        val sql = "INSERT INTO utilisateur (nom, prénom, courriel) values (?, ?, ?)"
+        db.update(sql,
             utilisateur.nom,
             utilisateur.prénom,
             utilisateur.courriel)
@@ -86,20 +100,12 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
     }
 
 
-    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
-        val updateQuery = "update utilisateur set nom=?, prénom=?, courriel=? where code=?"
-        db.update(updateQuery,
-            utilisateur.nom,
-            utilisateur.prénom,
-            utilisateur.courriel,
-            code)
-        return utilisateur
-    }
 
 
-    override fun supprimer(utilisateur: String) {
-        val deleteQuery = "delete from utilisateur where code = ?"
-        db.update(deleteQuery, utilisateur)
+
+    override fun supprimer(code: String) {
+        val sql = "DELETE FROM utilisateur WHERE code = ?"
+        db.update(sql, code)
     }
 
 }
