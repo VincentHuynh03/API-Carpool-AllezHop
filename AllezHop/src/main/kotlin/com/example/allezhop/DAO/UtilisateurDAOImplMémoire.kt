@@ -32,7 +32,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             )
         }
 
-        return results
+        return if (results.isEmpty()) null else results
     }
     override fun chercherParNom(nom: String): List<Utilisateur>? {
         val sql = "SELECT * FROM utilisateur WHERE nom = ?"
@@ -45,7 +45,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             )
         }
 
-        return results
+        return if (results.isEmpty()) null else results
     }
 
     override fun chercherParPrénom(prénom: String): List<Utilisateur>? {
@@ -58,7 +58,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
                 response.getString("courriel")
             )
         }
-        return results
+        return if (results.isEmpty()) null else results
     }
 
     override fun chercherParCourriel(courriel: String): List<Utilisateur>? {
@@ -71,7 +71,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
                 response.getString("courriel")
             )
         }
-        return results
+        return if (results.isEmpty()) null else results
     }
 
     override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
