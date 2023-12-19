@@ -11,10 +11,10 @@ class UtilisateurService(val dao: UtilisateurDAO) {
 
     fun chercherTous(): List<Utilisateur> = dao.chercherTous()
 
-    fun chercherParCode(code: String): List<Utilisateur>? = dao.chercherParCode(code.toInt())
+    fun chercherParCode(code: String): Utilisateur? = dao.chercherParCode(code)
     fun chercherParNom(nom: String): List<Utilisateur>? = dao.chercherParNom(nom)
     fun chercherParPrénom(prénom: String): List<Utilisateur>? = dao.chercherParPrénom(prénom)
-    fun chercherParCourriel(courriel: String): List<Utilisateur>? = dao.chercherParCourriel(courriel)
+    fun chercherParCourriel(courriel: String): Utilisateur? = dao.chercherParCourriel(courriel)
 
 
     fun ajouter(utilisateur: Utilisateur) = dao.ajouter(utilisateur)

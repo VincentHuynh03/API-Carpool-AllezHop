@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 class ReservationService(val dao: ReservationDAO) {
 
     fun chercherTous(): List<Reservation> = dao.chercherTous()
-    fun chercherParCode(code: Int): List<Reservation>? = dao.chercherParCode(code.toInt())
+    fun chercherParCode(code: String): Reservation? = dao.chercherParCode(code)
 
     fun ajouter(reservation: Reservation) = dao.ajouter(reservation)
 

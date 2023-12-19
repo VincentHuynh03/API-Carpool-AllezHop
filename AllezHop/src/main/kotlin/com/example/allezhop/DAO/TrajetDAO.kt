@@ -8,7 +8,7 @@ import javax.print.attribute.standard.Destination
 interface TrajetDAO : DAO<Trajet> {
     override fun chercherTous(): List<Trajet>
 
-    override fun chercherParCode(code: Int): List<Trajet>?
+    override fun chercherParCode(code: String): Trajet?
 
     fun chercherParConducteurNom(nom : String): List<Trajet>?
 

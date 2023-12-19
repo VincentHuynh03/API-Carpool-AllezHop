@@ -29,6 +29,7 @@ class ServeurRessourcesOAuth2ConfigurationAccès {
             authorizeHttpRequests {
                 authorize("/", permitAll)
                 authorize(HttpMethod.GET, "/**", permitAll)
+                authorize(HttpMethod.GET, "/utilisateurs", authenticated)
                 authorize(anyRequest, authenticated)
             }
             oauth2ResourceServer {

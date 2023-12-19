@@ -1,18 +1,21 @@
 package com.example.allezhop.Services
 
 import com.example.allezhop.DAO.TrajetDAO
+import com.example.allezhop.DAO.UtilisateurDAO
 import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
+import com.example.allezhop.exceptions.RessourceInexistanteException
+import crosemont.tdi.g66.restaurantapirest.Exceptions.DroitAccèsInsuffisantException
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class TrajetService(val dao: TrajetDAO) {
+class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
 
     fun chercherTous(): List<Trajet> = dao.chercherTous()
 
-    fun chercherParCode(code: String): List<Trajet>? = dao.chercherParCode(code.toInt())
+    fun chercherParCode(code: String): Trajet? = dao.chercherParCode(code)
 
     fun chercherParPays(pays: String): List<Trajet>? = dao.chercherParPays(pays)
 
@@ -23,11 +26,47 @@ class TrajetService(val dao: TrajetDAO) {
 
     fun chercherParVille(ville: String): List<Trajet>? = dao.chercherParVille(ville)
 
-    fun ajouter(trajet: Trajet) = dao.ajouter(trajet)
+    fun ajouter(trajet: Trajet, code_utilisateur : String) : Trajet {
+        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+        if (utilisateur == null){
+            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+        }
+        if (validerConducteur(utilisateur)){
+            dao.ajouter(trajet)
+        } else {
+            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent ajouter un trajet.")
+        }
+        return trajet
+    }
 
-    fun modifier(code: Int, trajet: Trajet) = dao.modifier(code, trajet)
+    fun modifier(code: Int, trajet: Trajet, code_utilisateur: String) : Trajet {
+        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+        if (utilisateur == null){
+            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+        }
+        if (validerConducteur(utilisateur)){
+            dao.modifier(code, trajet)
+        } else {
+            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent ajouter un trajet.")
+        }
+        return trajet
+    }
 
 
-    fun supprimer(code: String) = dao.supprimer(code)
+    fun supprimer(code: String, code_utilisateur: String) {
+        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+        if (utilisateur == null){
+            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+        }
+        if (validerConducteur(utilisateur)){
+            dao.supprimer(code)
+        } else {
+            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent ajouter un trajet.")
+        }
+    }
+
+    fun validerConducteur(utilisateur: Utilisateur): Boolean {
+        return (utilisateur.est_conducteur)
+    }
 
 }

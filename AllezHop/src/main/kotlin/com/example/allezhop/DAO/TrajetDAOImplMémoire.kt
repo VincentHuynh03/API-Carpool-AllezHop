@@ -19,13 +19,13 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
             response.getTimestamp("heure_arrivée").toLocalDateTime(),
             response.getTimestamp("heure_départ_max").toLocalDateTime(),
-            Utilisateur(response.getInt("conducteur"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"))
+            Utilisateur(response.getString("conducteur"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager"))
         )
     }
 
 
 
-    override fun chercherParCode(code: Int): List<Trajet>?  {
+    override fun chercherParCode(code: String): Trajet?  {
         val sql = "SELECT * FROM trajet JOIN adresse AS adresse_dest ON trajet.destination = adresse_dest.id JOIN adresse AS adresse_depart ON trajet.position_départ = adresse_depart.id JOIN utilisateur ON trajet.conducteur = utilisateur.code WHERE trajet.code = ?"
         val results = db.query(sql, code) { response, _ ->
             Trajet(response.getInt("code"),
@@ -33,10 +33,10 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
 
-        return if (results.isEmpty()) null else results
+        return if (results.isEmpty()) null else results.first()
     }
 
     override fun chercherParConducteurNom(nom: String): List<Trajet>? {
@@ -47,7 +47,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }
@@ -60,7 +60,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }
@@ -73,7 +73,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }
@@ -86,7 +86,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }
@@ -99,7 +99,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }
@@ -112,7 +112,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 Adresse(response.getInt("position_départ"), response.getString("adresse_depart.appartement"),response.getString("adresse_depart.numéro_municipal"), response.getString("adresse_depart.rue"), response.getString("adresse_depart.ville"), response.getString("adresse_depart.état"), response.getString("adresse_depart.code_postal"), response.getString("adresse_depart.pays")),
                 response.getTimestamp("heure_arrivée").toLocalDateTime(),
                 response.getTimestamp("heure_départ_max").toLocalDateTime(),
-                Utilisateur(response.getInt("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel")))
+                Utilisateur(response.getString("code"), response.getString("nom"), response.getString("prénom"), response.getString("courriel"), response.getBoolean("est_conducteur"), response.getBoolean("est_passager")))
         }
         return if (results.isEmpty()) null else results
     }

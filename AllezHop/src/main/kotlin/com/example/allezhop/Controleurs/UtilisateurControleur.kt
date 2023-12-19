@@ -30,15 +30,15 @@ class UtilisateurControleur(val service: UtilisateurService) {
     @GetMapping("/utilisateurs/{code}")
     fun obtenirUtilisateursParCode(@PathVariable code: String) = service.chercherParCode(code) ?: throw IntrouvableException("utilisateur $code n'est pas inscrit au service.")
 
-    @PostMapping("/utilisateurs")
-    fun ajouterTrajet(@RequestBody utilisateurs: Utilisateur): ResponseEntity<Utilisateur> {
-        val utilisateurAdded: Utilisateur? = service.ajouter(utilisateurs)
-        return if (utilisateurAdded != null) {
-            ResponseEntity.created(location(utilisateurAdded.code)).body(utilisateurAdded)
-        } else {
-            ResponseEntity.noContent().build()
-        }
-    }
+    //@PostMapping("/utilisateurs")
+    //fun ajouterTrajet(@RequestBody utilisateurs: Utilisateur): ResponseEntity<Utilisateur> {
+    //    val utilisateurAdded: Utilisateur? = service.ajouter(utilisateurs)
+    //    return if (utilisateurAdded != null) {
+    //        ResponseEntity.created(location(utilisateurAdded.code)).body(utilisateurAdded)
+    //    } else {
+    //        ResponseEntity.noContent().build()
+    //    }
+    //}
 
     @DeleteMapping("/utilisateurs/{code}")
     fun supprimerReservation(@PathVariable code: String): ResponseEntity<Unit> {

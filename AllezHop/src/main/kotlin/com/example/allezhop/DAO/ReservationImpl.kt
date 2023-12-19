@@ -18,33 +18,33 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
             code = response.getInt("code"),
             horodatage = response.getTimestamp("horodatage"),
             trajet_code = response.getInt("trajet_code"),
-            passager = response.getInt("utilisateur_code")
+            passager = response.getString("passager")
         )
     }
 
 
 
 
-    override fun chercherParCode(code: Int): List<Reservation>? {
+    override fun chercherParCode(code: String): Reservation? {
         val result = db.query("select * from réservation where code = ?", code) { response, _ ->
             Reservation(
                 code = response.getInt("code"),
                 horodatage = response.getTimestamp("horodatage"),
                 trajet_code = response.getInt("trajet_code"),
-                passager = response.getInt("utilisateur_code")
+                passager = response.getString("passager")
             )
         }
 
-        return if (result.isEmpty()) null else result
+        return if (result.isEmpty()) null else result.first()
     }
 
     override fun chercherParPassagerNom(nom: String): List<Reservation>? {
-        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom " + "FROM réservation " + "JOIN utilisateur ON réservation.utilisateur_code = utilisateur.code " + "WHERE utilisateur.nom = ?", arrayOf(nom)) { response, _ ->
+        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom " + "FROM réservation " + "JOIN utilisateur ON réservation.passager = utilisateur.code " + "WHERE utilisateur.nom = ?", arrayOf(nom)) { response, _ ->
             Reservation(
                 code = response.getInt("code"),
                 horodatage = response.getTimestamp("horodatage"),
                 trajet_code = response.getInt("trajet_code"),
-                passager = response.getInt("utilisateur_code")
+                passager = response.getString("passager")
             )
         }
 
@@ -52,13 +52,13 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
     }
 
     override fun chercherParHorodatage(date: LocalDateTime): List<Reservation>? {
-        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom FROM réservation JOIN utilisateur ON réservation.utilisateur_code = utilisateur.code WHERE réservation.horodatage = ?", arrayOf(
+        val result = db.query("SELECT réservation.*, utilisateur.nom, utilisateur.prénom FROM réservation JOIN utilisateur ON réservation.passager = utilisateur.code WHERE réservation.horodatage = ?", arrayOf(
             Timestamp.valueOf(date))) { response, _ ->
             Reservation(
                 code = response.getInt("code"),
                 horodatage = response.getTimestamp("horodatage"),
                 trajet_code = response.getInt("trajet_code"),
-                passager = response.getInt("utilisateur_code")
+                passager = response.getString("passager")
             )
         }
 
@@ -66,7 +66,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
     }
 
     override fun ajouter(reservation: Reservation): Reservation? {
-        val sql = "INSERT INTO réservation (horodatage, trajet_code, utilisateur_code) VALUES (?, ?, ?)"
+        val sql = "INSERT INTO réservation (horodatage, trajet_code, passager) VALUES (?, ?, ?)"
         db.update(
             sql,
             reservation.horodatage,
@@ -84,7 +84,7 @@ class ReservationImpl(val db: JdbcTemplate):  ReservationDAO {
 
     override fun modifier(code: Int, reservation: Reservation): Reservation? {
         val sql =
-            "UPDATE réservation SET horodatage = ?, trajet_code = ?, utilisateur_code = ? WHERE code = ?"
+            "UPDATE réservation SET horodatage = ?, trajet_code = ?, passager = ? WHERE code = ?"
 
         val modifier = db.update(
             sql,

@@ -13,35 +13,42 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun chercherTous(): List<Utilisateur> = db.query("select * from utilisateur") { response, _ ->
         Utilisateur(
-            response.getInt("code"),
+            response.getString("code"),
             response.getString("nom"),
             response.getString("prénom"),
             response.getString("courriel"),
+            response.getBoolean("est_conducteur"),
+            response.getBoolean("est_passager")
             )
     }
 
 
-    override fun chercherParCode(code: Int): List<Utilisateur>? {
+    override fun chercherParCode(code: String): Utilisateur? {
         val sql = "SELECT * FROM utilisateur WHERE code = ?"
         val results = db.query(sql, code) { response, _ ->
             Utilisateur(
-                response.getInt("code"),
+                response.getString("code"),
                 response.getString("nom"),
                 response.getString("prénom"),
-                response.getString("courriel")
+                response.getString("courriel"),
+                response.getBoolean("est_conducteur"),
+                response.getBoolean("est_passager")
             )
         }
 
-        return if (results.isEmpty()) null else results
+        return if (results.isEmpty()) null else results.first()
     }
+
     override fun chercherParNom(nom: String): List<Utilisateur>? {
         val sql = "SELECT * FROM utilisateur WHERE nom = ?"
         val results = db.query(sql, nom) { response, _ ->
             Utilisateur(
-                response.getInt("code"),
+                response.getString("code"),
                 response.getString("nom"),
                 response.getString("prénom"),
-                response.getString("courriel")
+                response.getString("courriel"),
+                response.getBoolean("est_conducteur"),
+                response.getBoolean("est_passager")
             )
         }
 
@@ -52,37 +59,43 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         val sql = "SELECT * FROM utilisateur WHERE prénom = ?"
         val results = db.query(sql, prénom) { response, _ ->
             Utilisateur(
-                response.getInt("code"),
+                response.getString("code"),
                 response.getString("nom"),
                 response.getString("prénom"),
-                response.getString("courriel")
+                response.getString("courriel"),
+                response.getBoolean("est_conducteur"),
+                response.getBoolean("est_passager")
             )
         }
         return if (results.isEmpty()) null else results
     }
 
-    override fun chercherParCourriel(courriel: String): List<Utilisateur>? {
+    override fun chercherParCourriel(courriel: String): Utilisateur? {
         val sql = "SELECT * FROM utilisateur WHERE courriel = ?"
         val results = db.query(sql, courriel) { response, _ ->
             Utilisateur(
-                response.getInt("code"),
+                response.getString("code"),
                 response.getString("nom"),
                 response.getString("prénom"),
-                response.getString("courriel")
+                response.getString("courriel"),
+                response.getBoolean("est_conducteur"),
+                response.getBoolean("est_passager")
             )
         }
-        return if (results.isEmpty()) null else results
+        return if (results.isEmpty()) null else results.first()
     }
 
     override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
         val sql =
-            "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? WHERE code = ?"
+            "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? , est_conducteur = ?, est_passager = ? WHERE code = ?"
 
         val modifier = db.update(
             sql,
             utilisateur.nom,
             utilisateur.prénom,
             utilisateur.courriel,
+            utilisateur.est_conducteur,
+            utilisateur.est_passager,
             code
         )
         return if (modifier > 0) utilisateur else null
@@ -90,11 +103,13 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur? {
-        val sql = "INSERT INTO utilisateur (nom, prénom, courriel) values (?, ?, ?)"
+        val sql = "INSERT INTO utilisateur (nom, prénom, courriel, est_conducteur, est_passager) values (?, ?, ?, ?, ?)"
         db.update(sql,
             utilisateur.nom,
             utilisateur.prénom,
-            utilisateur.courriel)
+            utilisateur.courriel,
+            utilisateur.est_conducteur,
+            utilisateur.est_passager)
 
         return utilisateur
     }
