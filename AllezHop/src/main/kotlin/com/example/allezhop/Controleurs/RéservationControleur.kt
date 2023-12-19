@@ -25,8 +25,9 @@ class RéservationControleur(val service: ReservationService) {
 
     @GetMapping("/reservations/passagers/{nom}")
     fun obtenirReservationsParPassagerNom(@PathVariable nom: String) = service.chercherParPassagerNom(nom)  ?: throw IntrouvableException("Le passager avec le nom $nom n'est pas inscrit au service ou n'as pas de réservations")
-    @GetMapping("/reservations/horodatage/{date}")
-    fun obtenirReservationsParHorodatage(@PathVariable date: String): List<Reservation>?{
+
+    @GetMapping("/reservations?horodatage={date}")
+    fun obtenirReservationsParHorodatage(@RequestParam date: String): List<Reservation>?{
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val dateEnDate = LocalDateTime.parse(date, formatter)
         return service.chercherParHorodatage(dateEnDate) ?: throw IntrouvableException("La réservation avec l'horodatage $date n'existe pas")
