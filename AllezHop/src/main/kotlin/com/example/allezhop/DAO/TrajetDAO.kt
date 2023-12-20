@@ -2,6 +2,7 @@ package com.example.allezhop.DAO
 
 import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
+import com.example.allezhop.Modèles.Utilisateur
 import java.time.LocalDateTime
 import javax.print.attribute.standard.Destination
 
@@ -25,9 +26,9 @@ interface TrajetDAO : DAO<Trajet> {
     override fun supprimer(code: String)
 
 
-    override fun modifier(code: Int, trajet: Trajet): Trajet?
+     fun modifier(code: String, trajet: Trajet): Trajet?
 
     override fun ajouter(trajet: Trajet): Trajet?
 
-    fun validerConducteur(code_Trajet: String, code_util: String?): Boolean
+    fun validerConducteurAvecSesTrajets(code_Trajet: String, code_util: String?): Boolean
 }

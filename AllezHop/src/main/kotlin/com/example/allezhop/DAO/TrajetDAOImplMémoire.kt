@@ -130,7 +130,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
         return trajet
     }
 
-    override fun modifier(code: Int, trajet: Trajet): Trajet? {
+    override fun modifier(code: String, trajet: Trajet): Trajet? {
         val updateQuery = "update trajet set destination=?, position_départ=?, heure_arrivée=?, heure_départ_max=?, conducteur=? where code=?"
         db.update(updateQuery,
             trajet.destination.code,
@@ -141,17 +141,25 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
             code)
         return trajet
     }
+
+    override fun modifier(code: Int, unT: Trajet): Trajet? {
+        TODO("Not yet implemented")
+    }
+
     override fun supprimer(code: String) {
         val sql = "DELETE FROM trajet WHERE code = ?"
         db.update(sql, code)
     }
 
 
-    override fun validerConducteur(code_Trajet: String, code_util: String?): Boolean {
+    override fun validerConducteurAvecSesTrajets(code_Trajet: String, code_util: String?): Boolean {
         val trajet = chercherParCode(code_Trajet)
         if (trajet != null && code_util != null) {
-            val conducteurCode = trajet.conducteur.code
-            if (conducteurCode == code_util) {
+            val utilisateur : Utilisateur = trajet.conducteur
+            val utilisateurCode = utilisateur.code
+            println("Debug: conducteurCode = $utilisateurCode, code_util = $code_util, $utilisateur")
+
+            if (utilisateurCode == code_util) {
                 return true
             }
         } else {

@@ -70,7 +70,7 @@ class TrajetControleur(val service: TrajetService) {
 
             return ResponseEntity.created(uri).body(nouveauTrajet)
         }
-        return ResponseEntity.badRequest().build()
+        return ResponseEntity.internalServerError().build()
     }
 
 
@@ -89,8 +89,8 @@ class TrajetControleur(val service: TrajetService) {
         value = ["/trajets/{code}"],
         consumes = ["application/json"],
         produces = ["application/json"])
-    fun modifierTrajet(@PathVariable code: Int, @RequestBody trajet: Trajet, utilsateur: Principal): ResponseEntity<Trajet>  {
-        val nouveauTrajet: Trajet? = service.modifier(code, trajet, utilsateur.name)
+    fun modifierTrajet(@PathVariable code: String, @RequestBody trajet: Trajet, utilisateur: Principal): ResponseEntity<Trajet>  {
+        val nouveauTrajet: Trajet? = service.modifier(code, trajet, utilisateur.name)
         if (nouveauTrajet != null) {
             val uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -100,14 +100,12 @@ class TrajetControleur(val service: TrajetService) {
 
             return ResponseEntity.created(uri).body(nouveauTrajet)
         }
-        return ResponseEntity.badRequest().build()
+        return ResponseEntity.ok(nouveauTrajet)
     }
 
     @DeleteMapping("/trajets/{code}")
-    fun supprimerTrajet(@PathVariable code: String, utilsateur: Principal): ResponseEntity<Unit> {
-        val trajet = service.chercherParCode(code)
-            ?: throw IntrouvableException("Le trajet est INTROUVABLE. Écran Bleu si je pouvais.")
-        service.supprimer(code, utilsateur.name)
+    fun supprimerTrajet(@PathVariable code: String, utilisateur: Principal): ResponseEntity<Unit> {
+        service.supprimer(code, utilisateur.name)
         return ResponseEntity.noContent().build()
     }
 

@@ -39,29 +39,30 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
         return trajet
     }
 
-    fun modifier(code: Int, trajet: Trajet, code_utilisateur: String) : Trajet {
-        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+    fun modifier(code: String, trajet: Trajet, code_utilisateur: String) : Trajet? {
+        val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
             throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
         }
-        if (validerConducteur(utilisateur)){
-            dao.modifier(code, trajet)
+        if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
+            return dao.modifier(code,trajet)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent ajouter un trajet.")
+            println("Code Trajet: $code, code_util: $code_utilisateur")
+            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent effacer leur propre trajet.")
         }
         return trajet
     }
 
 
     fun supprimer(code: String, code_utilisateur: String) {
-        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+        val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
             throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
         }
-        if (validerConducteur(utilisateur)){
-            dao.supprimer(code)
+        if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
+            return dao.supprimer(code)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent ajouter un trajet.")
+            throw DroitAccèsInsuffisantException("$code_utilisateur | $code Seuls les conducteurs peuvent effacer leur propre  trajet.")
         }
     }
 
