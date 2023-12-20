@@ -28,4 +28,6 @@ interface TrajetDAO : DAO<Trajet> {
     override fun modifier(code: Int, trajet: Trajet): Trajet?
 
     override fun ajouter(trajet: Trajet): Trajet?
+
+    fun validerConducteur(code_Trajet: String, code_util: String?): Boolean
 }

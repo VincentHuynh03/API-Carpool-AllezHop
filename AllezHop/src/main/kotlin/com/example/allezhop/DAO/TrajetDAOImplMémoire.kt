@@ -3,6 +3,7 @@ package com.example.allezhop.DAO
 import com.example.allezhop.Modèles.Adresse
 import com.example.allezhop.Modèles.Trajet
 import com.example.allezhop.Modèles.Utilisateur
+import com.example.allezhop.exceptions.RessourceInexistanteException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import org.springframework.jdbc.core.query
@@ -143,6 +144,20 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
     override fun supprimer(code: String) {
         val sql = "DELETE FROM trajet WHERE code = ?"
         db.update(sql, code)
+    }
+
+
+    override fun validerConducteur(code_Trajet: String, code_util: String?): Boolean {
+        val trajet = chercherParCode(code_Trajet)
+        if (trajet != null && code_util != null) {
+            val conducteurCode = trajet.conducteur.code
+            if (conducteurCode == code_util) {
+                return true
+            }
+        } else {
+            throw RessourceInexistanteException("Le conducteur $code_util n'est pas inscrit au service.")
+        }
+        return false
     }
 
 }
