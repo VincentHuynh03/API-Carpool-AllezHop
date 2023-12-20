@@ -26,7 +26,7 @@ interface TrajetDAO : DAO<Trajet> {
     override fun supprimer(code: String)
 
 
-     fun modifier(code: String, trajet: Trajet): Trajet?
+     override fun modifier(code: String, trajet: Trajet): Trajet?
 
     override fun ajouter(trajet: Trajet): Trajet?
 

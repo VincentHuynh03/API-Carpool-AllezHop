@@ -104,19 +104,8 @@ class TrajetControleur(val service: TrajetService) {
     }
 
     @DeleteMapping("/trajets/{code}")
-    fun supprimerTrajet(@PathVariable code: String, utilisateur: Principal): ResponseEntity<Unit> {
+    fun supprimerTrajet(@PathVariable code: String, utilisateur: Principal): ResponseEntity<Trajet> {
         service.supprimer(code, utilisateur.name)
         return ResponseEntity.noContent().build()
     }
-
-
-
-    private fun location(code: Int): URI {
-        return ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{code}")
-            .buildAndExpand(code)
-            .toUri()
-    }
-
     }

@@ -13,7 +13,7 @@ interface UtilisateurDAO : DAO<Utilisateur> {
     fun chercherParCourriel(courriel: String): Utilisateur?
 
 
-    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur?
+     fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur?
 
     override fun ajouter(utilisateur: Utilisateur): Utilisateur?
 

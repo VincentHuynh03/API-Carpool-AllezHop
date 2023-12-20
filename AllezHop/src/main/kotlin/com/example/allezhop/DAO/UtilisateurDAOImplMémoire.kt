@@ -85,7 +85,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         return if (results.isEmpty()) null else results.first()
     }
 
-    override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
+     override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
         val sql =
             "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? , est_conducteur = ?, est_passager = ? WHERE utilisateur_code = ?"
 
@@ -99,6 +99,11 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
             code
         )
         return if (modifier > 0) utilisateur else null
+    }
+
+
+    override fun modifier(code: String, unT: Utilisateur): Utilisateur? {
+        TODO("Not yet implemented")
     }
 
 
