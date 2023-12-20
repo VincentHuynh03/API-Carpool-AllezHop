@@ -13,7 +13,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun chercherTous(): List<Utilisateur> = db.query("select * from utilisateur") { response, _ ->
         Utilisateur(
-            response.getString("code"),
+            response.getString("utilisateur_code"),
             response.getString("nom"),
             response.getString("prénom"),
             response.getString("courriel"),
@@ -24,10 +24,10 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
 
     override fun chercherParCode(code: String): Utilisateur? {
-        val sql = "SELECT * FROM utilisateur WHERE code = ?"
+        val sql = "SELECT * FROM utilisateur WHERE utilisateur_code = ?"
         val results = db.query(sql, code) { response, _ ->
             Utilisateur(
-                response.getString("code"),
+                response.getString("utilisateur_code"),
                 response.getString("nom"),
                 response.getString("prénom"),
                 response.getString("courriel"),
@@ -43,7 +43,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         val sql = "SELECT * FROM utilisateur WHERE nom = ?"
         val results = db.query(sql, nom) { response, _ ->
             Utilisateur(
-                response.getString("code"),
+                response.getString("utilisateur_code"),
                 response.getString("nom"),
                 response.getString("prénom"),
                 response.getString("courriel"),
@@ -59,7 +59,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         val sql = "SELECT * FROM utilisateur WHERE prénom = ?"
         val results = db.query(sql, prénom) { response, _ ->
             Utilisateur(
-                response.getString("code"),
+                response.getString("utilisateur_code"),
                 response.getString("nom"),
                 response.getString("prénom"),
                 response.getString("courriel"),
@@ -74,7 +74,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
         val sql = "SELECT * FROM utilisateur WHERE courriel = ?"
         val results = db.query(sql, courriel) { response, _ ->
             Utilisateur(
-                response.getString("code"),
+                response.getString("utilisateur_code"),
                 response.getString("nom"),
                 response.getString("prénom"),
                 response.getString("courriel"),
@@ -87,7 +87,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
     override fun modifier(code: Int, utilisateur: Utilisateur): Utilisateur? {
         val sql =
-            "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? , est_conducteur = ?, est_passager = ? WHERE code = ?"
+            "UPDATE utilisateur SET nom = ?, prénom = ?, courriel = ? , est_conducteur = ?, est_passager = ? WHERE utilisateur_code = ?"
 
         val modifier = db.update(
             sql,
@@ -119,7 +119,7 @@ class UtilisateurDAOImplMémoire(val db: JdbcTemplate):  UtilisateurDAO {
 
 
     override fun supprimer(code: String) {
-        val sql = "DELETE FROM utilisateur WHERE code = ?"
+        val sql = "DELETE FROM utilisateur WHERE utilisateur_code = ?"
         db.update(sql, code)
     }
 
