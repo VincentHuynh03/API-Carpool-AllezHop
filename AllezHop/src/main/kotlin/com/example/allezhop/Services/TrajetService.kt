@@ -29,7 +29,7 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
     fun ajouter(trajet: Trajet, code_utilisateur : String) : Trajet {
         val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (validerConducteur(utilisateur)){
             dao.ajouter(trajet)
@@ -42,7 +42,7 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
     fun modifier(code: String, trajet: Trajet, code_utilisateur: String) : Trajet? {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
             return dao.modifier(code,trajet)
@@ -56,7 +56,7 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
     fun supprimer(code: String, code_utilisateur: String) {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
             return dao.supprimer(code)

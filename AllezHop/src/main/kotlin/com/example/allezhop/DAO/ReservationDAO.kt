@@ -12,8 +12,6 @@ interface ReservationDAO : DAO<Reservation> {
 
     fun chercherParPassagerNom(nom : String): List<Reservation>?
 
-    fun chercherParHorodatage(date: LocalDateTime): List<Reservation>?
-
     override fun supprimer(code: String)
 
     override fun modifier(code: String, reservation: Reservation): Reservation?

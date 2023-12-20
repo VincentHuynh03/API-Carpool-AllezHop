@@ -19,12 +19,11 @@ class ReservationService(val dao: ReservationDAO, val utilisateur_dao : Utilisat
 
     fun chercherParPassagerNom(nom: String): List<Reservation>? = dao.chercherParPassagerNom(nom)
 
-    fun chercherParHorodatage(date: LocalDateTime): List<Reservation>? = dao.chercherParHorodatage(date)
 
     fun ajouter(reservation: Reservation, code_utilisateur: String) : Reservation? {
-        val utilisateur = utilisateur_dao.chercherParCode( code_utilisateur )
+        val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (validePassager(utilisateur)){
             return dao.ajouter(reservation)
@@ -35,9 +34,9 @@ class ReservationService(val dao: ReservationDAO, val utilisateur_dao : Utilisat
     }
 
     fun modifier(code: String, reservation: Reservation,code_utilisateur: String) : Reservation? {
-        val utilisateur = utilisateur_dao.chercherParCode(code)
+        val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (dao.validerPassagerAvecSesReservations(code,code_utilisateur)){
             return dao.modifier(code,reservation)
@@ -50,12 +49,12 @@ class ReservationService(val dao: ReservationDAO, val utilisateur_dao : Utilisat
     fun supprimer(code: String,code_utilisateur: String) {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur $code_utilisateur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
         }
         if (dao.validerPassagerAvecSesReservations(code,code_utilisateur)){
             return dao.supprimer(code)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent effacer leur propre  trajet.")
+            throw DroitAccèsInsuffisantException("Seuls les passagers peuvent effacer leur propre  trajet.")
         }
     }
 
