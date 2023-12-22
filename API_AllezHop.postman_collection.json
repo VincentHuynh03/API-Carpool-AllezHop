@@ -1,0 +1,2111 @@
+{
+	"info": {
+		"_postman_id": "aea03e60-39af-425f-ba21-5512dadbdd1d",
+		"name": "API AllezHop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30564718",
+		"_collection_link": "https://gold-spaceship-634768.postman.co/workspace/Team-Workspace~b4b442a6-9646-4a10-8df4-bf06f575f534/collection/30564718-aea03e60-39af-425f-ba21-5512dadbdd1d?action=share&source=collection_link&creator=30564718"
+	},
+	"item": [
+		{
+			"name": "Trajets",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/2",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par le nom du conducteur",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?conducteurs=Doe",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "conducteurs",
+											"value": "Doe"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par date d'arrivée",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?date=2023-01-19 08:15:00",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2023-01-19 08:15:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par ville",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?ville=Montréal",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "ville",
+											"value": "Montréal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par état",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?état=QC",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "état",
+											"value": "QC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par pays",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?pays=CA",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "pays",
+											"value": "CA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on chercher un trajet par code qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/9",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"destination\": {\r\n            \"code\": 1,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6510\",\r\n            \"rue\": \"15e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X2V5\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"position_départ\": {\r\n            \"code\": 4,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6399\",\r\n            \"rue\": \"12e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X3A6\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n        \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n        \"conducteur\": {\r\n            \"code\": 2,\r\n            \"nom\": \"Doe\",\r\n            \"prénom\": \"Jane\",\r\n            \"courriel\": \"jane.doe@gmail.com\"\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "modifier trajet",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"code\": 5,\r\n    \"destination\": {\r\n        \"code\": 1,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6510\",\r\n        \"rue\": \"15e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X2V5\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"position_départ\": {\r\n        \"code\": 4,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6399\",\r\n        \"rue\": \"12e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X3A6\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n    \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n    \"conducteur\": {\r\n        \"code\": 1,\r\n        \"nom\": \"Voirenne\",\r\n        \"prénom\": \"Iris\",\r\n        \"courriel\": \"iris.v@gmail.com\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand modifier un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Supprimer trajet",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Réservation",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "réservations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations",
+									"host": [
+										"{{url}}reservations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "réservation par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/2",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "réservations par le nom du passager",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/passagers/Tremblay",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"passagers",
+										"Tremblay"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on cherche une réservation par une horodatage qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/horodatage/2023-12-12 21:30:43",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"horodatage",
+										"2023-12-12 21:30:43"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on cherche les réservations d'un nom d'un passager qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/passagers/Smith",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"passagers",
+										"Smith"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "ajouter réservation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": 4,\r\n        \"horodatage\": \"2023-12-15T19:24:16.000+00:00\",\r\n        \"trajet_code\": 4,\r\n        \"passager\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}reservations",
+									"host": [
+										"{{url}}reservations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter une réservation lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations",
+									"host": [
+										"{{url}}reservations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "modifier réservation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"code\": 4,\r\n        \"horodatage\": \"2023-12-18T02:30:43.000+00:00\",\r\n        \"trajet_code\": 2,\r\n        \"passager\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand modifier une réservation lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "delete réservation",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer une réservation lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Utilisateurs",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Utilisateurs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs",
+									"host": [
+										"{{url}}utilisateurs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Utilisateur par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/2",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Utilisateur par nom",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/nom/Voirenne",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"nom",
+										"Voirenne"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Utilisateur par prénom",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/prénom/Bob",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"prénom",
+										"Bob"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Utilisateur par courriel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/courriel/jane.doe@gmail.com",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"courriel",
+										"jane.doe@gmail.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on cherche un utilisateur qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/7",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Ajout Utilisateurs",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nom\": \"Cormier\",\r\n    \"prénom\": \"Jérémy\",\r\n    \"courriel\": \"jc@gmail.com\"\r\n    }"
+								},
+								"url": {
+									"raw": "{{url}}utilisateurs",
+									"host": [
+										"{{url}}utilisateurs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs",
+									"host": [
+										"{{url}}utilisateurs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Modifier utilisateur par code",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": 4,\r\n        \"nom\": \"Gabriel\",\r\n        \"prénom\": \"Ralph Christian\",\r\n        \"courriel\": \"rgabriel@gmail.com\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}utilisateurs/5",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand modifie un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/5",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Delete utilisateur par code",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/4",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/4",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Passager - Bob",
+			"item": [
+				{
+					"name": "GET trajets",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/2",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par date d'arriver",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/date/2023-01-19 08:15:00",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"date",
+										"2023-01-19 08:15:00"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par ville",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?ville=Montréal",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "ville",
+											"value": "Montréal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par état",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?état=QC",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "état",
+											"value": "QC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par pays",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?pays=CA",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "pays",
+											"value": "CA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on chercher un trajet par code qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/9",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Post Réservation",
+					"item": [
+						{
+							"name": "ajouter réservation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"code\": 4,\r\n        \"horodatage\": \"2023-12-20T04:46:34.000+00:00\",\r\n        \"trajet_code\": 1,\r\n        \"passager\": {\r\n            \"code\": \"auth0|65818dfc536bb6debfcca492\",\r\n            \"nom\": \"Tremblay\",\r\n            \"prénom\": \"Bob\",\r\n            \"courriel\": \"bob.t@gmail.com\",\r\n            \"est_conducteur\": false,\r\n            \"est_passager\": true\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}reservations",
+									"host": [
+										"{{url}}reservations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter une réservation lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations",
+									"host": [
+										"{{url}}reservations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT Reservation",
+					"item": [
+						{
+							"name": "modifier reservation",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"code\": 7,\r\n        \"horodatage\": \"2023-12-20T04:46:34.000+00:00\",\r\n        \"trajet_code\": 2,\r\n        \"passager\": {\r\n            \"code\": \"auth0|65818dfc536bb6debfcca492\",\r\n            \"nom\": \"Tremblay\",\r\n            \"prénom\": \"Bob\",\r\n            \"courriel\": \"bob.t@gmail.com\",\r\n            \"est_conducteur\": false,\r\n            \"est_passager\": true\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE Réservation",
+					"item": [
+						{
+							"name": "delete réservation",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"code\": 6,\r\n        \"horodatage\": \"2023-12-20T04:46:34.000+00:00\",\r\n        \"trajet_code\": 2,\r\n        \"passager\": {\r\n            \"code\": \"auth0|65818dfc536bb6debfcca492\",\r\n            \"nom\": \"Tremblay\",\r\n            \"prénom\": \"Bob\",\r\n            \"courriel\": \"bob.t@gmail.com\",\r\n            \"est_conducteur\": false,\r\n            \"est_passager\": true\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}reservations/6",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer une réservation lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}reservations/4",
+									"host": [
+										"{{url}}reservations"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET Utilisateur",
+					"item": [
+						{
+							"name": "Utilisateur par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/code",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"code"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on cherche un utilisateur qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/7",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST Utilisateur",
+					"item": [
+						{
+							"name": "Ajout Utilisateurs",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nom\": \"Cormier\",\r\n    \"prénom\": \"Jérémy\",\r\n    \"courriel\": \"jc@gmail.com\"\r\n    }"
+								},
+								"url": {
+									"raw": "{{url}}utilisateurs",
+									"host": [
+										"{{url}}utilisateurs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs",
+									"host": [
+										"{{url}}utilisateurs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT Utilisateur",
+					"item": [
+						{
+							"name": "Modifier utilisateur par code",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": 4,\r\n        \"nom\": \"Gabriel\",\r\n        \"prénom\": \"Ralph Christian\",\r\n        \"courriel\": \"rgabriel@gmail.com\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}utilisateurs/4",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand modifie un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/5",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE Utilisateur",
+					"item": [
+						{
+							"name": "Delete utilisateur par code",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/4",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer un utilisateur lorsqu'il n'a pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}utilisateurs/4",
+									"host": [
+										"{{url}}utilisateurs"
+									],
+									"path": [
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST Trajets",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"destination\": {\r\n            \"code\": 1,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6510\",\r\n            \"rue\": \"15e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X2V5\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"position_départ\": {\r\n            \"code\": 4,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6399\",\r\n            \"rue\": \"12e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X3A6\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n        \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n        \"conducteur\": {\r\n            \"code\": \"auth0|65818de66a1998a82fac7f26\",\r\n            \"nom\": \"Doe\",\r\n            \"prénom\": \"Jane\",\r\n            \"courriel\": \"jane.doe@gmail.com\"\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "tokenRequestParams",
+						"value": [
+							{
+								"key": "audience",
+								"value": "http://allezhop",
+								"enabled": true,
+								"send_as": "request_body"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "bob.t@gmail.com",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "yuS'Gh5W,5hWy.h",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{ClientSecret}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{ClientID}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{access_token}}",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "bob_passager",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Conducteur - Iris Lavoie",
+			"item": [
+				{
+					"name": "GET Trajets",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/2",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par le nom du conducteur",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?conducteurs=Doe",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "conducteurs",
+											"value": "Doe"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par date d'arrivée",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?date=2023-01-19 08:15:00",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2023-01-19 08:15:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajets par ville",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?ville=Montréal",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "ville",
+											"value": "Montréal"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par état",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?état=QC",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "état",
+											"value": "QC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "trajet par pays",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets?pays=CA",
+									"host": [
+										"{{url}}trajets"
+									],
+									"query": [
+										{
+											"key": "pays",
+											"value": "CA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 404 quand on chercher un trajet par code qui n'existe pas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/9",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"9"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST Trajets",
+					"item": [
+						{
+							"name": "trajets",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"destination\": {\r\n            \"code\": 1,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6510\",\r\n            \"rue\": \"15e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X2V5\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"position_départ\": {\r\n            \"code\": 4,\r\n            \"appartement\": null,\r\n            \"numéroMunicipal\": \"6399\",\r\n            \"rue\": \"12e avenue\",\r\n            \"ville\": \"Montréal\",\r\n            \"état\": \"QC\",\r\n            \"codePostal\": \"H1X3A6\",\r\n            \"pays\": \"CA\"\r\n        },\r\n        \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n        \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n        \"conducteur\": {\r\n            \"code\": \"auth0|65818de66a1998a82fac7f26\",\r\n            \"nom\": \"Doe\",\r\n            \"prénom\": \"Jane\",\r\n            \"courriel\": \"jane.doe@gmail.com\"\r\n        }\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand ajouter un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets",
+									"host": [
+										"{{url}}trajets"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT Trajets",
+					"item": [
+						{
+							"name": "modifier trajet",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"code\": 5,\r\n    \"destination\": {\r\n        \"code\": 1,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6510\",\r\n        \"rue\": \"15e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X2V5\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"position_départ\": {\r\n        \"code\": 4,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6399\",\r\n        \"rue\": \"12e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X3A6\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n    \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n    \"conducteur\": {\r\n        \"code\": \"auth0|65818d99132aa175d51c78d3\",\r\n        \"nom\": \"Voirenne\",\r\n        \"prénom\": \"Iris\",\r\n        \"courriel\": \"iris.v@gmail.com\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets/3",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand modifier un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modifier trajet d'un autre conducteur",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": 3,\r\n    \"destination\": {\r\n        \"code\": 1,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6510\",\r\n        \"rue\": \"15e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X2V5\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"position_départ\": {\r\n        \"code\": 4,\r\n        \"appartement\": null,\r\n        \"numéroMunicipal\": \"6399\",\r\n        \"rue\": \"12e avenue\",\r\n        \"ville\": \"Montréal\",\r\n        \"état\": \"QC\",\r\n        \"codePostal\": \"H1X3A6\",\r\n        \"pays\": \"CA\"\r\n    },\r\n    \"heure_arrivée\": \"2023-01-19T08:15:00\",\r\n    \"heure_départ_max\": \"2023-01-19T07:40:00\",\r\n    \"conducteur\": {\r\n        \"code\": \"auth0|65818d99132aa175d51c78d3\",\r\n        \"nom\": \"Voirenne\",\r\n        \"prénom\": \"Iris\",\r\n        \"courriel\": \"iris.v@gmail.com\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}trajets/2",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE Trajets",
+					"item": [
+						{
+							"name": "Supprimer trajet",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/3",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Erreur 401 quand supprimer un trajet lorsqu'ils n'ont pas les accès",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}trajets/5",
+									"host": [
+										"{{url}}trajets"
+									],
+									"path": [
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Réservation",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "réservation par code",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}reservations/2",
+											"host": [
+												"{{url}}reservations"
+											],
+											"path": [
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 404 quand on cherche une réservation par une horodatage qui n'existe pas",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}reservations/horodatage/2023-12-12 21:30:43",
+											"host": [
+												"{{url}}reservations"
+											],
+											"path": [
+												"horodatage",
+												"2023-12-12 21:30:43"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 404 quand on cherche les réservations d'un nom d'un passager qui n'existe pas",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}reservations/passagers/Smith",
+											"host": [
+												"{{url}}reservations"
+											],
+											"path": [
+												"passagers",
+												"Smith"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Utilisateurs",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Utilisateur par code",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs/?code=auth0|65818d99132aa175d51c78d3",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												""
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "auth0|65818d99132aa175d51c78d3"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 404 quand on cherche un utilisateur qui n'existe pas",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs/7",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												"7"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "Ajout Utilisateurs",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"nom\": \"Cormier\",\r\n    \"prénom\": \"Jérémy\",\r\n    \"courriel\": \"jc@gmail.com\"\r\n    }"
+										},
+										"url": {
+											"raw": "{{url}}utilisateurs",
+											"host": [
+												"{{url}}utilisateurs"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 401 quand ajouter un utilisateur lorsqu'il n'a pas les accès",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs",
+											"host": [
+												"{{url}}utilisateurs"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "PUT",
+							"item": [
+								{
+									"name": "Modifier utilisateur par code",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"code\": 4,\r\n        \"nom\": \"Gabriel\",\r\n        \"prénom\": \"Ralph Christian\",\r\n        \"courriel\": \"rgabriel@gmail.com\"\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}utilisateurs/5",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 401 quand modifie un utilisateur lorsqu'il n'a pas les accès",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs/5",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												"5"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "DELETE",
+							"item": [
+								{
+									"name": "Delete utilisateur par code",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs/4",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Erreur 401 quand supprimer un utilisateur lorsqu'il n'a pas les accès",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}utilisateurs/4",
+											"host": [
+												"{{url}}utilisateurs"
+											],
+											"path": [
+												"4"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "tokenRequestParams",
+						"value": [
+							{
+								"key": "audience",
+								"value": "http://allezhop",
+								"enabled": true,
+								"send_as": "request_body"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{access_token}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{ClientID}}",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{ClientSecret}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "iris.v@gmail.com",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "yuS'Gh5W,5hWy.h",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "iris_conducteur",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "https://dev-70g2kep6yucnbgmh.us.auth0.com/oauth/token",
+				"type": "string"
+			},
+			{
+				"key": "tokenRequestParams",
+				"value": [
+					{
+						"key": "audience",
+						"value": "http://allezhop",
+						"enabled": true,
+						"send_as": "request_body"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "clientId",
+				"value": "{{ClientID}}",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{ClientSecret}}",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "AllezHopToken",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ClientSecret",
+			"value": "m43ytfWchclhYn9VUsvNg_D7BudzgTCJWyh9n_gMDmNW3Jz5XPpd3aS-z1AEKrb7"
+		},
+		{
+			"key": "ClientID",
+			"value": "rfeFFLJcWTp55nu9JEdumhqjRkODHEW6"
+		},
+		{
+			"key": "url",
+			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "access_token",
+			"value": "https://dev-70g2kep6yucnbgmh.us.auth0.com/oauth/token",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "yuS'Gh5W,5hWy.h",
+			"type": "string"
+		}
+	]
+}
