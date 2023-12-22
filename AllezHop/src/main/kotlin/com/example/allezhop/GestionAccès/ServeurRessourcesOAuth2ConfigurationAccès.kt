@@ -28,7 +28,7 @@ class ServeurRessourcesOAuth2ConfigurationAccès {
         http {
             authorizeHttpRequests {
                 authorize("/", permitAll)
-                authorize(HttpMethod.GET, "/**", permitAll)
+                authorize(HttpMethod.GET, "/trajets", permitAll)
                 authorize(HttpMethod.GET, "/utilisateurs", authenticated)
                 authorize(anyRequest, authenticated)
             }

@@ -159,7 +159,7 @@ class TrajetDAOImplMémoire(val db: JdbcTemplate):  TrajetDAO {
                 return true
             }
         } else {
-            throw RessourceInexistanteException("Le conducteur n'est pas inscrit au service.")
+            throw RessourceInexistanteException("Le trajet n'est pas inscrit au service.")
         }
         return false
     }

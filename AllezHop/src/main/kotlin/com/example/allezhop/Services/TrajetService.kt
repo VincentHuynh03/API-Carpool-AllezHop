@@ -47,7 +47,7 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
         if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
             return dao.modifier(code,trajet)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent effacer leur propre trajet.")
+            throw DroitAccèsInsuffisantException("Les conducteurs ne peuvent effacer que leurs propres trajets.")
         }
         return trajet
     }
@@ -61,7 +61,7 @@ class TrajetService(val dao: TrajetDAO, val utilisateur_dao : UtilisateurDAO) {
         if (dao.validerConducteurAvecSesTrajets(code,code_utilisateur)){
             return dao.supprimer(code)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les conducteurs peuvent effacer leur propre  trajet.")
+            throw DroitAccèsInsuffisantException("Les conducteurs ne peuvent effacer que leurs propres  trajets.")
         }
     }
 
