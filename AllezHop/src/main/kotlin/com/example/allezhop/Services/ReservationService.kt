@@ -23,7 +23,7 @@ class ReservationService(val dao: ReservationDAO, val utilisateur_dao : Utilisat
     fun ajouter(reservation: Reservation, code_utilisateur: String) : Reservation? {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur n'est pas inscrit au service.")
         }
         if (validePassager(utilisateur)){
             return dao.ajouter(reservation)
@@ -36,20 +36,20 @@ class ReservationService(val dao: ReservationDAO, val utilisateur_dao : Utilisat
     fun modifier(code: String, reservation: Reservation,code_utilisateur: String) : Reservation? {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur n'est pas inscrit au service.")
         }
         if (dao.validerPassagerAvecSesReservations(code,code_utilisateur)){
             return dao.modifier(code,reservation)
         } else {
-            throw DroitAccèsInsuffisantException("Seuls les passagers peuvent effacer leur propre réservations.")
+            throw DroitAccèsInsuffisantException("Seuls les passagers peuvent modifier leur propre réservations.")
         }
         return reservation
     }
 
-    fun supprimer(code: String,code_utilisateur: String) {
+    fun supprimer(code: String, code_utilisateur: String) {
         val utilisateur = utilisateur_dao.chercherParCode(code_utilisateur)
         if (utilisateur == null){
-            throw RessourceInexistanteException("L'utilisateur utilisé n'est pas inscrit au service.")
+            throw RessourceInexistanteException("L'utilisateur n'est pas inscrit au service.")
         }
         if (dao.validerPassagerAvecSesReservations(code,code_utilisateur)){
             return dao.supprimer(code)
