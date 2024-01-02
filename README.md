@@ -29,3 +29,7 @@ Développer une application mobile "Allez Hop" pour faciliter le covoiturage.
 
 ### Sous-équipe 2
 *Équipier 3(Jérémy Cormier)* et *Équipier 4(Vincent Huynh)* seront responsables de la gestion des profils des utilisateurs, de la connexion et de l'inscription. 
+
+# Connexion SQL
+Utilisateur = root
+Mot de passe = root
