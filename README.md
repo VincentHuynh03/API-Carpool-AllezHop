@@ -23,7 +23,7 @@ Développer une application mobile "Allez Hop" pour faciliter le covoiturage.
 
 
 ## Équipes de développement
-*Équipier 1(Ralph Christian Gabriel)* et *Équipier 2(Maël Mane)* ,*Équipier 3(Jérémy Cormier)* et *Équipier 4(Vincent Huynh)* 
+*Équipier 1(Ralph Christian Gabriel)* , *Équipier 2(Maël Mane)* ,*Équipier 3(Jérémy Cormier)* et *Équipier 4(Vincent Huynh)* 
 
 # Connexion SQL
 Utilisateur = root
